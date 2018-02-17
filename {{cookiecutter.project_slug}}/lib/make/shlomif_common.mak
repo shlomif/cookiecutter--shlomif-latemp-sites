@@ -9,17 +9,23 @@ define COPY
 	cp -f $< $@ || true
 endef
 
+TEST_ENV =
+TEST_TARGETS = Tests/*.t
+
+define TEST
+	$(TEST_ENV) $1 $(TEST_TARGETS)
+endef
+
 test: ptest
 
 runtest: all
-	runprove Tests/*.t
+	$(call TEST,runprove)
 
 ptest: all
-	prove Tests/*.t
+	$(call TEST,prove)
 
 %.show:
 	@echo "$* = $($*)"
 
 spell: all
 	./bin/spell-checker-iface
-
