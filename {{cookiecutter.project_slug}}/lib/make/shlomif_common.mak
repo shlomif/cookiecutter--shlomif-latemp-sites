@@ -1,3 +1,6 @@
+COMMON_PREPROC_FLAGS = -I $$HOME/conf/wml/Latemp/lib -I../lib
+LATEMP_WML_FLAGS := $(shell latemp-config --wml-flags)
+
 RSYNC = rsync --progress --verbose --rsh=ssh --exclude='*.d' --exclude='**/*.d' --exclude='**/.*.swp'
 
 # cp may sometimes fail in parallel builds due to:
