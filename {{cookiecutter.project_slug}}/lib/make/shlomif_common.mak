@@ -3,6 +3,11 @@ LATEMP_WML_FLAGS := $(shell latemp-config --wml-flags)
 
 RSYNC = rsync --progress --verbose --rsh=ssh --exclude='*.d' --exclude='**/*.d' --exclude='**/.*.swp'
 
+# WML_LATEMP_PATH="$$(perl -MFile::Spec -e 'print File::Spec->rel2abs(shift)' '$@')" ;
+define DEF_WML_PATH
+fn="$$PWD/$@" ;
+endef
+
 # cp may sometimes fail in parallel builds due to:
 # http://unix.stackexchange.com/questions/116280/cannot-create-regular-file-filename-file-exists
 #
