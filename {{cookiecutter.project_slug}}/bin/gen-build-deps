@@ -9,49 +9,44 @@ use YAML::XS qw/ LoadFile /;
 use Path::Tiny qw/ path /;
 
 my $out_fn;
-my $exes_fn;
 my $modules_fn;
 
 GetOptions(
     'o|output=s'     => \$out_fn,
-    'exes-conf=s'    => \$exes_fn,
     'modules-conf=s' => \$modules_fn,
 ) or die "Failed - $!";
 
 {
-    my @not_found;
-
-    foreach my $line ( path($exes_fn)->lines_utf8 )
-    {
-        chomp $line;
-        my ($cmd) = ( $line =~ m{\A(\S+)} )
-            or die "Wrong line - <$line>!";
-        if (
-            not(
-                  ( $cmd =~ m{\A/} )
-                ? ( -e $cmd )
-                : ( defined( scalar( which($cmd) ) ) )
-            )
-            )
-        {
-            push @not_found, $line;
-        }
-    }
-
-    if (@not_found)
-    {
-        print "The following commands could not be found:\n\n";
-        foreach my $cmd ( sort { $a cmp $b } @not_found )
-        {
-            print "$cmd\n";
-        }
-        exit(-1);
-    }
-}
-
-{
     my ($yaml_data) = LoadFile($modules_fn);
 
+    {
+        my @not_found;
+
+        foreach my $line ( @{ $yaml_data->{required}->{executables} } )
+        {
+            my $cmd = $line->{exe};
+            if (
+                not(
+                      ( $cmd =~ m{\A/} )
+                    ? ( -e $cmd )
+                    : ( defined( scalar( which($cmd) ) ) )
+                )
+                )
+            {
+                push @not_found, $line;
+            }
+        }
+
+        if (@not_found)
+        {
+            print "The following commands could not be found:\n\n";
+            foreach my $cmd ( sort { $a->{exe} cmp $b->{exe} } @not_found )
+            {
+                print "$cmd->{exe}\t$cmd->{url}\n";
+            }
+            exit(-1);
+        }
+    }
     {
         my $required_modules = $yaml_data->{required}->{perl5_modules};
 
