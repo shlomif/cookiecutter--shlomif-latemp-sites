@@ -103,7 +103,7 @@ var mainOptions = {
   collapseInlineTagWhitespace: 'Collapse white space around inline tag',
   collapseWhitespace: 'Collapse white space that contributes to text nodes in a document tree.',
   conservativeCollapse: 'Always collapse to 1 space (never remove it entirely)',
-  customAttrAssign: ['Arrays of regex\'es that allow to support custom attribute assign expressions (e.g. \'<div flex?="{{mode != cover}}"></div>\')', parseJSONRegExpArray],
+  customAttrAssign: ['Arrays of regex\'es that allow to support custom attribute assign expressions (e.g. \'<div flex?="\{\{mode != cover\}\}"></div>\')', parseJSONRegExpArray],
   customAttrCollapse: ['Regex that specifies custom attribute to strip newlines from (e.g. /ng-class/)', parseRegExp],
   customAttrSurround: ['Arrays of regex\'es that allow to support custom attribute surround expressions (e.g. <input {{#if value}}checked="checked"{{/if}}>)', parseJSONRegExpArray],
   customEventAttributes: ['Arrays of regex\'es that allow to support custom event attributes for minifyJS (e.g. ng-click)', parseJSONRegExpArray],
