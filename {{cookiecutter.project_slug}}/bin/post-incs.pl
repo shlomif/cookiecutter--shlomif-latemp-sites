@@ -18,7 +18,6 @@ my $ALTERNATIVES_TEXT = join '|',
 
 my @filenames;
 my @ad_filenames;
-FILENAMES:
 foreach my $fn (@ARGV)
 {
     my $_f = sub {
@@ -26,59 +25,62 @@ foreach my $fn (@ARGV)
     };
 
     eval {
-        my $orig_text = $_f->()->slurp_utf8;
-        my $text      = $orig_text;
-
-        if ( $text =~ /^<!-- Project Wonderful/ms )
+        PROCESS_FILE:
         {
-            next FILENAMES;
-        }
+            my $orig_text = $_f->()->slurp_utf8;
+            my $text      = $orig_text;
 
-        if ( !$ENV{NO_I} )
-        {
-            $text =~
-s#^\({5}include "([^"]+)"\){5}\n#path("lib/$1")->slurp_utf8#egms;
-            $text =~
-s#\({5}chomp_inc='([^']+)'\){5}#my ($l) = path("lib/$1")->lines_utf8({count => 1});chomp$l;$l#egms;
-        }
-
-        if ( $ENV{F} )
-        {
-            foreach my $class (qw(info irc-conversation))
+            if ( $text =~ /^<!-- Project Wonderful/ms )
             {
-                my $table_from = qq{<table class="$class">};
-                my $table_to   = qq{<table class="$class" summary="">};
-
-                $text =~ s#\Q$table_from\E#$table_to#g;
+                last PROCESS_FILE;
             }
-        }
 
-        $text =~ s# +$##gms;
-        $text =~ s#(</div>|</li>|</html>)\n\n#$1\n#g;
+            if ( !$ENV{NO_I} )
+            {
+                $text =~
+s#^\({5}include "([^"]+)"\){5}\n#path("lib/$1")->slurp_utf8#egms;
+                $text =~
+s#\({5}chomp_inc='([^']+)'\){5}#my ($l) = path("lib/$1")->lines_utf8({count => 1});chomp$l;$l#egms;
+            }
 
-        $text =~ s#\s+xml:space="[^"]*"##g;
-        $text =~ s#(<div)(?:\s+(?:$ALTERNATIVES_TEXT))+#$1 #gms;
+            if ( $ENV{F} )
+            {
+                foreach my $class (qw(info irc-conversation))
+                {
+                    my $table_from = qq{<table class="$class">};
+                    my $table_to   = qq{<table class="$class" summary="">};
 
-        # Remove surrounding space of tags.
-        $text =~
-            s#\s*(</?(?:body|(?:br /)|div|head|li|ol|p|title|ul)>)\s*#$1#gms;
+                    $text =~ s#\Q$table_from\E#$table_to#g;
+                }
+            }
 
-        # Remove document trailing space.
-        $text =~ s#\s+\z##ms;
+            $text =~ s# +$##gms;
+            $text =~ s#(</div>|</li>|</html>)\n\n#$1\n#g;
 
-        my $minify = $ENV{ALWAYS_MIN};
-        if ( $text ne $orig_text )
-        {
-            $_f->()->spew_utf8($text);
-            $minify //= 1;
-        }
-        if ($minify)
-        {
-            push @filenames, $fn;
-        }
-        elsif ( $ENV{APPLY_ADS} )
-        {
-            push @ad_filenames, $fn;
+            $text =~ s#\s+xml:space="[^"]*"##g;
+            $text =~ s#(<div)(?:\s+(?:$ALTERNATIVES_TEXT))+#$1 #gms;
+
+            # Remove surrounding space of tags.
+            $text =~
+s#\s*(</?(?:body|(?:br /)|div|head|li|ol|p|title|ul)>)\s*#$1#gms;
+
+            # Remove document trailing space.
+            $text =~ s#\s+\z##ms;
+
+            my $minify = $ENV{ALWAYS_MIN};
+            if ( $text ne $orig_text )
+            {
+                $_f->()->spew_utf8($text);
+                $minify //= 1;
+            }
+            if ($minify)
+            {
+                push @filenames, $fn;
+            }
+            elsif ( $ENV{APPLY_ADS} )
+            {
+                push @ad_filenames, $fn;
+            }
         }
     };
     if ( my $err = $@ )
