@@ -18,6 +18,7 @@ my $ALTERNATIVES_TEXT = join '|',
 
 my @filenames;
 my @ad_filenames;
+FILENAMES:
 foreach my $fn (@ARGV)
 {
     my $_f = sub {
@@ -27,6 +28,11 @@ foreach my $fn (@ARGV)
     eval {
         my $orig_text = $_f->()->slurp_utf8;
         my $text      = $orig_text;
+
+        if ( $text =~ /^<!-- Project Wonderful/ms )
+        {
+            next FILENAMES;
+        }
 
         if ( !$ENV{NO_I} )
         {
