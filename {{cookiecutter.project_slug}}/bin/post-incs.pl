@@ -111,7 +111,12 @@ if ( $ENV{APPLY_ADS} )
                     ( $$text_ref =~
 s%<div id="([^"]+)">Placeholder</div>%"\n" . $TEXTS{$1}%egms
                     );
-                return $r1;
+                my $r2 = '';
+                if ( index( $$text_ref, q#<!DOCTYPE html># ) >= 0 )
+                {
+                    $r2 = $$text_ref =~ s%<table summary=""%<table%g;
+                }
+                return ( $r1 || $r2 );
             }
         );
     }
