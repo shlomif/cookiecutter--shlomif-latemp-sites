@@ -4,8 +4,7 @@ use strict;
 use warnings;
 
 use Path::Tiny qw/ path /;
-use lib './lib';
-use Shlomif::Out qw/ modify_on_change /;
+use File::Update qw/ modify_on_change /;
 
 my $XMLNS_NEEDLE = <<'EOF';
  xmlns:db="http://docbook.org/ns/docbook" xmlns:d="http://docbook.org/ns/docbook" xmlns:vrd="http://www.shlomifish.org/open-source/projects/XML-Grammar/Vered/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xhtml="http://www.w3.org/1999/xhtml"
