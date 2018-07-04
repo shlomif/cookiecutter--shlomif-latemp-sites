@@ -3,33 +3,7 @@
 use strict;
 use warnings;
 use Test::More tests => 1;
-use Test::Differences  (qw( eq_or_diff ));
-use File::Find::Object ();
-
-my $tree = File::Find::Object->new( {}, '.' );
-
-my %results;
-while ( my $r = $tree->next_obj() )
-{
-    if ( $r->is_dir() )
-    {
-        my %found;
-        my %positives;
-        foreach my $fn ( @{ $tree->get_current_node_files_list() } )
-        {
-            my $lc = lc $fn;
-            if ( ++$found{$lc} > 1 )
-            {
-                push @{ $positives{$lc} }, $fn;
-            }
-        }
-
-        if (%positives)
-        {
-            $results{ $r->path() } = \%positives;
-        }
-    }
-}
+use Test::File::Find::CaseCollide ();
 
 # TEST
-eq_or_diff( ( \%results ), {}, "No results were found." );
+Test::File::Find::CaseCollide->verify( { dir => '.' } );
