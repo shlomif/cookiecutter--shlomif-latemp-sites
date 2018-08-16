@@ -47,39 +47,43 @@ sub find_exes
     return;
 }
 
+sub find_perl5_modules
+{
+    my ( $self, $required_modules ) = @_;
+
+    my @not_found;
+
+    foreach my $m ( sort { $a cmp $b } keys(%$required_modules) )
+    {
+        my $v = $required_modules->{$m};
+        local $SIG{__WARN__} = sub { };
+        my $verdict = eval( "use $m " . ( $v || '' ) . ' ();' );
+        my $Err = $@;
+
+        if ($Err)
+        {
+            push @not_found, $m;
+        }
+    }
+
+    if (@not_found)
+    {
+        print "The following modules could not be found:\n\n";
+        foreach my $module (@not_found)
+        {
+            print "$module\n";
+        }
+        exit(-1);
+    }
+    return;
+}
+
 sub find_deps
 {
     my ( $self, $yaml_data ) = @_;
 
     $self->find_exes( $yaml_data->{required}->{executables} );
-    {
-        my $required_modules = $yaml_data->{required}->{perl5_modules};
-
-        my @not_found;
-
-        foreach my $m ( sort { $a cmp $b } keys(%$required_modules) )
-        {
-            my $v = $required_modules->{$m};
-            local $SIG{__WARN__} = sub { };
-            my $verdict = eval( "use $m " . ( $v || '' ) . ' ();' );
-            my $Err = $@;
-
-            if ($Err)
-            {
-                push @not_found, $m;
-            }
-        }
-
-        if (@not_found)
-        {
-            print "The following modules could not be found:\n\n";
-            foreach my $module (@not_found)
-            {
-                print "$module\n";
-            }
-            exit(-1);
-        }
-    }
+    $self->find_perl5_modules( $yaml_data->{required}->{perl5_modules} );
     {
         my @required_modules = keys %{ $yaml_data->{required}->{py3_modules} };
         my @not_found;
