@@ -168,13 +168,24 @@ sub get_rpm_spec_text_from_yaml_file
 {
     my ( $self, $modules_fn, ) = @_;
 
-    my $ret = '';
-    open my $o, '>', \$ret;
-    {
-        my ($yaml_data) = LoadFile($modules_fn);
+    my ($yaml_data) = LoadFile($modules_fn);
+    return $self->get_rpm_spec_text_from_data(
+        {
+            data => $yaml_data,
+        }
+    );
+}
 
-        my $keys = $yaml_data->{required}->{meta_data}->{'keys'};
-        $o->print(<<"EOF");
+sub get_rpm_spec_text_from_data
+{
+    my ( $self, $args, ) = @_;
+
+    my $yaml_data = $args->{data};
+    my $ret       = '';
+    open my $o, '>', \$ret;
+
+    my $keys = $yaml_data->{required}->{meta_data}->{'keys'};
+    $o->print(<<"EOF");
 Summary:	$keys->{summary}
 Name:		$keys->{package_name}
 Version:	0.0.1
@@ -184,48 +195,48 @@ Group:		System
 Url:		$keys->{url}
 BuildArch:	noarch
 EOF
+    {
+        foreach my $line ( @{ $yaml_data->{required}->{executables} } )
         {
-            foreach my $line ( @{ $yaml_data->{required}->{executables} } )
+            my $cmd = $line->{exe};
+            if ( $cmd eq 'sass' )
             {
-                my $cmd = $line->{exe};
-                if ( $cmd eq 'sass' )
-                {
-                    $cmd = 'ruby-sass';
-                }
-                elsif ( $cmd eq 'convert' )
-                {
-                    $cmd = 'imagemagick';
-                }
-                elsif ( $cmd eq 'node' )
-                {
-                    $cmd = 'nodejs';
-                }
-                $o->print("Requires: $cmd\n");
+                $cmd = 'ruby-sass';
             }
+            elsif ( $cmd eq 'convert' )
+            {
+                $cmd = 'imagemagick';
+            }
+            elsif ( $cmd eq 'node' )
+            {
+                $cmd = 'nodejs';
+            }
+            $o->print("Requires: $cmd\n");
         }
+    }
+    {
+        my $required_modules = $yaml_data->{required}->{perl5_modules};
+
+        foreach my $m ( sort { $a cmp $b } keys(%$required_modules) )
         {
-            my $required_modules = $yaml_data->{required}->{perl5_modules};
-
-            foreach my $m ( sort { $a cmp $b } keys(%$required_modules) )
-            {
-                $o->print("Requires: perl($m)\n");
-            }
+            $o->print("Requires: perl($m)\n");
         }
+    }
+    {
+        my @required_modules =
+            keys %{ $yaml_data->{required}->{py3_modules} };
+
+        foreach my $module (@required_modules)
         {
-            my @required_modules =
-                keys %{ $yaml_data->{required}->{py3_modules} };
-
-            foreach my $module (@required_modules)
+            if ( $module eq 'bs4' )
             {
-                if ( $module eq 'bs4' )
-                {
-                    $module = 'beautifulsoup4';
-                }
-                $o->print("Requires: python3dist($module)\n");
+                $module = 'beautifulsoup4';
             }
+            $o->print("Requires: python3dist($module)\n");
         }
+    }
 
-        $o->print(<<"EOF");
+    $o->print(<<"EOF");
 
 %description
 $keys->{desc}
@@ -236,7 +247,6 @@ $keys->{desc}
 * Mon Jan 12 2015 shlomif <shlomif\@shlomifish.org> 0.0.1-1.mga5
 - Initial package.
 EOF
-    }
     close($o);
     return $ret;
 }
