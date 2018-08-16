@@ -7,6 +7,7 @@ use Moo;
 
 use File::Which qw/ which /;
 use YAML::XS qw/ LoadFile /;
+use Path::Tiny qw/ path /;
 
 sub verify_deps_in_yaml
 {
@@ -156,8 +157,17 @@ sub find_deps
 sub write_rpm_spec_from_yaml_file
 {
     my ( $self, $modules_fn, $out_fn ) = @_;
+    path($out_fn)
+        ->spew_utf8( $self->get_rpm_spec_text_from_yaml_file($modules_fn) );
+    return;
+}
 
-    open my $o, '>', $out_fn;
+sub get_rpm_spec_text_from_yaml_file
+{
+    my ( $self, $modules_fn, ) = @_;
+
+    my $ret = '';
+    open my $o, '>', \$ret;
     {
         my ($yaml_data) = LoadFile($modules_fn);
 
@@ -226,7 +236,7 @@ $keys->{desc}
 EOF
     }
     close($o);
-    return;
+    return $ret;
 }
 
 1;
