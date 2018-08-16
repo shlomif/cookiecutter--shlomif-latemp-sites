@@ -3,21 +3,27 @@
 use strict;
 use warnings;
 
-use Getopt::Long qw/ GetOptions /;
+package App::Deps::Verify;
+
+use strict;
+use warnings;
+
+use Moo;
+
 use File::Which qw/ which /;
 use YAML::XS qw/ LoadFile /;
 use Path::Tiny qw/ path /;
 
-my $out_fn;
-my $modules_fn;
-
-GetOptions(
-    'o|output=s'     => \$out_fn,
-    'modules-conf=s' => \$modules_fn,
-) or die "Failed - $!";
-
+sub verify_deps_in_yaml
 {
-    my ($yaml_data) = LoadFile($modules_fn);
+    my ( $self, $modules_fn ) = @_;
+
+    return $self->find_deps( LoadFile($modules_fn) );
+}
+
+sub find_deps
+{
+    my ( $self, $yaml_data ) = @_;
 
     {
         my @not_found;
@@ -128,7 +134,25 @@ GetOptions(
         }
     }
 
+    return;
 }
+
+package main;
+
+use strict;
+use warnings;
+
+use Getopt::Long qw/ GetOptions /;
+my $out_fn;
+my $modules_fn;
+
+GetOptions(
+    'o|output=s'     => \$out_fn,
+    'modules-conf=s' => \$modules_fn,
+) or die "Failed - $!";
+
+App::Deps::Verify->new->verify_deps_in_yaml($modules_fn);
+
 path($out_fn)->spew_utf8("Success!");
 
 exit(0);
