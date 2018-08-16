@@ -78,64 +78,77 @@ sub find_perl5_modules
     return;
 }
 
+sub find_python3_modules
+{
+    my ( $self, $mods ) = @_;
+    my @required_modules = keys %$mods;
+    my @not_found;
+
+    foreach my $module (@required_modules)
+    {
+        if ( $module !~ m#\A[a-zA-Z0-9_\.]+\z# )
+        {
+            die "invalid python3 module id - $module !";
+        }
+        if ( system( 'python3', '-c', "import $module" ) != 0 )
+        {
+            push @not_found, $module;
+        }
+    }
+    if (@not_found)
+    {
+        print "The following python3 modules could not be found:\n\n";
+        foreach my $module (@not_found)
+        {
+            print "$module\n";
+        }
+        exit(-1);
+    }
+    return;
+}
+
+sub find_required_files
+{
+    my ( $self, $required_files ) = @_;
+
+    my @not_found;
+
+    foreach my $path (@$required_files)
+    {
+        my $p = $path->{path};
+        if ( $p =~ m#[\\\$]# )
+        {
+            die "Invalid path $p!";
+        }
+        if ( !-e ( $p =~ s#\A~/#$ENV{HOME}/#r ) )
+        {
+            push @not_found, $path;
+        }
+    }
+
+    if (@not_found)
+    {
+        print "The following required files could not be found.\n";
+        print "Please set them up:\n";
+        print "\n";
+
+        foreach my $path (@not_found)
+        {
+            print "$path->{path}\n$path->{desc}\n";
+        }
+        exit(-1);
+    }
+    return;
+}
+
 sub find_deps
 {
     my ( $self, $yaml_data ) = @_;
 
     $self->find_exes( $yaml_data->{required}->{executables} );
     $self->find_perl5_modules( $yaml_data->{required}->{perl5_modules} );
-    {
-        my @required_modules = keys %{ $yaml_data->{required}->{py3_modules} };
-        my @not_found;
-
-        foreach my $module (@required_modules)
-        {
-            if ( system( 'python3', '-c', "import $module" ) != 0 )
-            {
-                push @not_found, $module;
-            }
-        }
-        if (@not_found)
-        {
-            print "The following python3 modules could not be found:\n\n";
-            foreach my $module (@not_found)
-            {
-                print "$module\n";
-            }
-            exit(-1);
-        }
-    }
-
-    {
-        my @not_found;
-
-        my @required_files = @{ $yaml_data->{required}->{files} };
-        foreach my $path (@required_files)
-        {
-            my $p = $path->{path};
-            if ( $p =~ m#[\\\$]# )
-            {
-                die "Invalid path $p!";
-            }
-            if ( !-e ( $p =~ s#\A~/#$ENV{HOME}/#r ) )
-            {
-                push @not_found, $path;
-            }
-        }
-
-        if (@not_found)
-        {
-            print "The following required files could not be found.\n";
-            print "Please set them up:\n";
-            print "\n";
-
-            foreach my $path (@not_found)
-            {
-                print "$path->{path}\n$path->{desc}\n";
-            }
-            exit(-1);
-        }
-    }
+    $self->find_python3_modules( $yaml_data->{required}->{py3_modules} );
+    $self->find_required_files( $yaml_data->{required}->{files} );
 
     return;
 }
