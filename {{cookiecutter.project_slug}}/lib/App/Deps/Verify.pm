@@ -7,7 +7,6 @@ use Moo;
 
 use File::Which qw/ which /;
 use YAML::XS qw/ LoadFile /;
-use Path::Tiny qw/ path /;
 
 sub verify_deps_in_yaml
 {
@@ -16,38 +15,43 @@ sub verify_deps_in_yaml
     return $self->find_deps( LoadFile($modules_fn) );
 }
 
+sub find_exes
+{
+    my ( $self, $lines ) = @_;
+
+    my @not_found;
+    foreach my $line (@$lines)
+    {
+        my $cmd = $line->{exe};
+        if (
+            not(
+                  ( $cmd =~ m{\A/} )
+                ? ( -e $cmd )
+                : ( defined( scalar( which($cmd) ) ) )
+            )
+            )
+        {
+            push @not_found, $line;
+        }
+    }
+
+    if (@not_found)
+    {
+        print "The following commands could not be found:\n\n";
+        foreach my $cmd ( sort { $a->{exe} cmp $b->{exe} } @not_found )
+        {
+            print "$cmd->{exe}\t$cmd->{url}\n";
+        }
+        exit(-1);
+    }
+    return;
+}
+
 sub find_deps
 {
     my ( $self, $yaml_data ) = @_;
 
-    {
-        my @not_found;
-
-        foreach my $line ( @{ $yaml_data->{required}->{executables} } )
-        {
-            my $cmd = $line->{exe};
-            if (
-                not(
-                      ( $cmd =~ m{\A/} )
-                    ? ( -e $cmd )
-                    : ( defined( scalar( which($cmd) ) ) )
-                )
-                )
-            {
-                push @not_found, $line;
-            }
-        }
-
-        if (@not_found)
-        {
-            print "The following commands could not be found:\n\n";
-            foreach my $cmd ( sort { $a->{exe} cmp $b->{exe} } @not_found )
-            {
-                print "$cmd->{exe}\t$cmd->{url}\n";
-            }
-            exit(-1);
-        }
-    }
+    $self->find_exes( $yaml_data->{required}->{executables} );
     {
         my $required_modules = $yaml_data->{required}->{perl5_modules};
 

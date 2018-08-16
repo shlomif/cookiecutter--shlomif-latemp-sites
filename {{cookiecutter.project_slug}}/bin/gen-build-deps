@@ -3,8 +3,9 @@
 use strict;
 use warnings;
 
-use lib './lib';
 use Getopt::Long qw/ GetOptions /;
+use Path::Tiny qw/ path /;
+use lib './lib';
 use App::Deps::Verify ();
 
 my $out_fn;
