@@ -2,6 +2,7 @@
 
 use strict;
 use warnings;
+use autodie;
 
 use Getopt::Long qw/ GetOptions /;
 use Path::Tiny qw/ path /;

@@ -8,6 +8,7 @@ use lib './lib';
 use App::Deps::Verify ();
 
 use Getopt::Long qw/ GetOptions /;
+
 my $out_fn;
 my $modules_fn = 'bin/required-modules.yml';
 
