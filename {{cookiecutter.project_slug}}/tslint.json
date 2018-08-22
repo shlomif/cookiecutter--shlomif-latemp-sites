@@ -5,10 +5,12 @@
     ],
     "jsRules": {},
     "rules": {
+        "class-name": false,
         "max-classes-per-file": 90000,
+        "no-conditional-assignment": false,
         "no-string-throw": false,
         "quotemark": false,
         "variable-name": false
     },
     "rulesDirectory": []
-}
+
