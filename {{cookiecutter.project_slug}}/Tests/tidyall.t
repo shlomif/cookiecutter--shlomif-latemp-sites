@@ -1,7 +1,9 @@
-package MyCacheModel;
+package main;
 
 use strict;
 use warnings;
+
+package MyCacheModel;
 
 use Moo;
 
@@ -19,8 +21,6 @@ sub _build_cache_value
 
 package main;
 
-use strict;
-use warnings;
 use Test::Code::TidyAll qw/ tidyall_ok /;
 
 my $KEY = 'TIDYALL_DATA_DIR';
