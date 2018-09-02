@@ -196,12 +196,13 @@ Url:		$keys->{url}
 BuildArch:	noarch
 EOF
     {
+    EXECUTABLES:
         foreach my $line ( @{ $yaml_data->{required}->{executables} } )
         {
             my $cmd = $line->{exe};
             if ( $cmd eq 'sass' )
             {
-                $cmd = 'ruby-sass';
+                next EXECUTABLES;
             }
             elsif ( $cmd eq 'convert' )
             {
