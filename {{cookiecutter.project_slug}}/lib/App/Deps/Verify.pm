@@ -208,6 +208,10 @@ EOF
             {
                 $cmd = 'imagemagick';
             }
+            elsif ( $cmd eq 'minify' )
+            {
+                next EXECUTABLES;
+            }
             elsif ( $cmd eq 'node' )
             {
                 $cmd = 'nodejs';
