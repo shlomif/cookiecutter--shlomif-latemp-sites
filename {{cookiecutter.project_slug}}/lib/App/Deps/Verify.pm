@@ -183,31 +183,36 @@ sub find_deps
 
 sub write_rpm_spec_from_yaml_file
 {
-    my ( $self, $modules_fn, $out_fn ) = @_;
-    path($out_fn)
-        ->spew_utf8( $self->get_rpm_spec_text_from_yaml_file($modules_fn) );
-    return;
+    my ( $self, $args ) = @_;
+
+    $self->write_rpm_spec_text_from_yaml_file_to_fh(
+        +{
+            modules_fn => $args->{modules_fn},
+            out_fh     => scalar( path( $args->{out_fn} )->openw_utf8 ),
+        }
+    ) return;
 }
 
-sub get_rpm_spec_text_from_yaml_file
+sub write_rpm_spec_text_from_yaml_file_to_fh
 {
-    my ( $self, $modules_fn, ) = @_;
+    my ( $self, $args, ) = @_;
 
-    my ($yaml_data) = LoadFile($modules_fn);
-    return $self->get_rpm_spec_text_from_data(
+    my ($yaml_data) = LoadFile( $args->{modules_fn} );
+    return $self->write_rpm_spec_text_to_fh(
         {
-            data => $yaml_data,
+            data   => $yaml_data,
+            out_fh => $args->{out_fh},
         }
     );
 }
 
-sub get_rpm_spec_text_from_data
+sub write_rpm_spec_text_to_fh
 {
     my ( $self, $args, ) = @_;
 
     my $yaml_data = $args->{data};
     my $ret       = '';
-    open my $o, '>', \$ret;
+    my $o         = $args->{out_fh};
 
     my $keys = $yaml_data->{required}->{meta_data}->{'keys'};
     $o->print(<<"EOF");
@@ -277,8 +282,8 @@ $keys->{desc}
 * Mon Jan 12 2015 shlomif <shlomif\@shlomifish.org> 0.0.1-1.mga5
 - Initial package.
 EOF
-    close($o);
-    return $ret;
+
+    return;
 }
 
 1;

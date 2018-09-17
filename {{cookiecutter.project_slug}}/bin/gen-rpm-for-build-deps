@@ -17,4 +17,9 @@ GetOptions(
     'modules-conf=s' => \$modules_fn,
 ) or die "Failed - $!";
 
-App::Deps::Verify->new->write_rpm_spec_from_yaml_file( $modules_fn, $out_fn );
+App::Deps::Verify->new->write_rpm_spec_from_yaml_file(
+    +{
+        modules_fn => $modules_fn,
+        out_fn     => $out_fn
+    }
+);
