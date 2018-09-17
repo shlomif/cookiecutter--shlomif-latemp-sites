@@ -1,13 +1,13 @@
 MODULES_LIST = bin/required-modules.yml
 
-BIN = ./bin/gen-build-deps
+BIN = verify-deps
 
 STAMP = lib/make/build-deps/build-deps.stamp
 
 all: $(STAMP)
 
-$(STAMP): $(BIN) $(MODULES_LIST)
-	perl $(BIN) -o $@ --modules-conf $(MODULES_LIST)
+$(STAMP): $(MODULES_LIST)
+	$(BIN) verify -o $@ --input $(MODULES_LIST)
 
 clean:
 	rm -f $(STAMP)
