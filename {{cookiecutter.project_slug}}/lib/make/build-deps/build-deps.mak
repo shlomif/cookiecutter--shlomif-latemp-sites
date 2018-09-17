@@ -1,6 +1,6 @@
 MODULES_LIST = bin/required-modules.yml
 
-BIN = verify-deps
+BIN = deps-apps
 
 STAMP = lib/make/build-deps/build-deps.stamp
 
