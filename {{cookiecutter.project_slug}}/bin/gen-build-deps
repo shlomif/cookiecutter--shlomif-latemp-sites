@@ -17,7 +17,8 @@ GetOptions(
     'modules-conf=s' => \$modules_fn,
 ) or die "Failed - $!";
 
-App::Deps::Verify->new->verify_deps_in_yaml($modules_fn);
+App::Deps::Verify->new->verify_deps_in_yamls(
+    +{ filenames => [ $modules_fn, ] } );
 
 path($out_fn)->spew_utf8("Success!");
 

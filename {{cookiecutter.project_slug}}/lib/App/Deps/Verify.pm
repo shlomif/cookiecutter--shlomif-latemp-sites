@@ -11,19 +11,23 @@ use File::Which qw/ which /;
 use YAML::XS qw/ LoadFile /;
 use Path::Tiny qw/ path /;
 
-sub verify_deps_in_yaml
+sub verify_deps_in_yamls
 {
-    my ( $self, $modules_fn ) = @_;
+    my ( $self, $args ) = @_;
 
-    return $self->find_deps( LoadFile($modules_fn) );
+    return $self->find_deps(
+        {
+            inputs => [ map { LoadFile($_) } @{ $args->{filenames} } ]
+        }
+    );
 }
 
-sub find_exes
+sub _find_exes
 {
-    my ( $self, $lines ) = @_;
+    my ( $self, $args ) = @_;
 
     my @not_found;
-    foreach my $line (@$lines)
+    foreach my $line ( map { @$_ } @{ $args->{inputs} } )
     {
         my $cmd = $line->{exe};
         if (
@@ -50,22 +54,25 @@ sub find_exes
     return;
 }
 
-sub find_perl5_modules
+sub _find_perl5_modules
 {
-    my ( $self, $required_modules ) = @_;
+    my ( $self, $args ) = @_;
 
     my @not_found;
 
-    foreach my $m ( sort { $a cmp $b } keys(%$required_modules) )
+    foreach my $required_modules ( @{ $args->{inputs} } )
     {
-        my $v = $required_modules->{$m};
-        local $SIG{__WARN__} = sub { };
-        my $verdict = eval( "use $m " . ( $v || '' ) . ' ();' );
-        my $Err = $@;
-
-        if ($Err)
+        foreach my $m ( sort { $a cmp $b } keys(%$required_modules) )
         {
-            push @not_found, $m;
+            my $v = $required_modules->{$m};
+            local $SIG{__WARN__} = sub { };
+            my $verdict = eval( "use $m " . ( $v || '' ) . ' ();' );
+            my $Err = $@;
+
+            if ($Err)
+            {
+                push @not_found, $m;
+            }
         }
     }
 
@@ -81,21 +88,24 @@ sub find_perl5_modules
     return;
 }
 
-sub find_python3_modules
+sub _find_python3_modules
 {
-    my ( $self, $mods ) = @_;
-    my @required_modules = keys %$mods;
+    my ( $self, $args ) = @_;
     my @not_found;
-
-    foreach my $module (@required_modules)
+    foreach my $mods ( @{ $args->{inputs} } )
     {
-        if ( $module !~ m#\A[a-zA-Z0-9_\.]+\z# )
+        my @required_modules = keys %$mods;
+
+        foreach my $module (@required_modules)
         {
-            die "invalid python3 module id - $module !";
-        }
-        if ( system( 'python3', '-c', "import $module" ) != 0 )
-        {
-            push @not_found, $module;
+            if ( $module !~ m#\A[a-zA-Z0-9_\.]+\z# )
+            {
+                die "invalid python3 module id - $module !";
+            }
+            if ( system( 'python3', '-c', "import $module" ) != 0 )
+            {
+                push @not_found, $module;
+            }
         }
     }
     if (@not_found)
@@ -110,22 +120,25 @@ sub find_python3_modules
     return;
 }
 
-sub find_required_files
+sub _find_required_files
 {
-    my ( $self, $required_files ) = @_;
+    my ( $self, $args ) = @_;
 
     my @not_found;
 
-    foreach my $path (@$required_files)
+    foreach my $required_files ( @{ $args->{inputs} } )
     {
-        my $p = $path->{path};
-        if ( $p =~ m#[\\\$]# )
+        foreach my $path (@$required_files)
         {
-            die "Invalid path $p!";
-        }
-        if ( !-e ( $p =~ s#\A~/#$ENV{HOME}/#r ) )
-        {
-            push @not_found, $path;
+            my $p = $path->{path};
+            if ( $p =~ m#[\\\$]# )
+            {
+                die "Invalid path $p!";
+            }
+            if ( !-e ( $p =~ s#\A~/#$ENV{HOME}/#r ) )
+            {
+                push @not_found, $path;
+            }
         }
     }
 
@@ -146,12 +159,24 @@ sub find_required_files
 
 sub find_deps
 {
-    my ( $self, $yaml_data ) = @_;
+    my ( $self, $args ) = @_;
 
-    $self->find_exes( $yaml_data->{required}->{executables} );
-    $self->find_perl5_modules( $yaml_data->{required}->{perl5_modules} );
-    $self->find_python3_modules( $yaml_data->{required}->{py3_modules} );
-    $self->find_required_files( $yaml_data->{required}->{files} );
+    my $inputs = $args->{inputs};
+
+    my $map = sub {
+        my ($key) = @_;
+        return [ map { $_->{required}->{$key} } @$inputs ];
+    };
+
+    my $args_m = sub {
+        my ($key) = @_;
+        return +{ inputs => $map->($key), };
+    };
+
+    $self->_find_exes( $args_m->('executables') );
+    $self->_find_perl5_modules( $args_m->('perl5_modules') );
+    $self->_find_python3_modules( $args_m->('py3_modules') );
+    $self->_find_required_files( $args_m->('files') );
 
     return;
 }
