@@ -190,7 +190,9 @@ sub write_rpm_spec_from_yaml_file
             modules_fn => $args->{modules_fn},
             out_fh     => scalar( path( $args->{out_fn} )->openw_utf8 ),
         }
-    ) return;
+    );
+
+    return;
 }
 
 sub write_rpm_spec_text_from_yaml_file_to_fh
