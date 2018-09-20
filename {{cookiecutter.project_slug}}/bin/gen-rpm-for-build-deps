@@ -19,7 +19,7 @@ GetOptions(
 
 App::Deps::Verify->new->write_rpm_spec_from_yaml_file(
     +{
-        modules_fn => $modules_fn,
-        out_fn     => $out_fn
+        deps_fn => $modules_fn,
+        out_fn  => $out_fn
     }
 );
