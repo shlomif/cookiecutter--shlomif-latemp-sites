@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+package HTML::Latemp::GenDeps;
 
 use strict;
 use warnings;
