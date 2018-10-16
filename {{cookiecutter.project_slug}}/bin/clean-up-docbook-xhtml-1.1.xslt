@@ -28,6 +28,10 @@
     </xsl:template>
 
     <xsl:template match="xhtml:a/@id"/>
+    <xsl:template match="xhtml:td/@align"/>
+    <xsl:template match="xhtml:td/@valign"/>
+    <xsl:template match="xhtml:th/@align"/>
+    <xsl:template match="xhtml:th/@valign"/>
 
     <xsl:template match="xhtml:a[not(@href)]"/>
 
