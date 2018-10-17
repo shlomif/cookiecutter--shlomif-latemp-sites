@@ -13,7 +13,9 @@
         "no-string-throw": false,
         "prettier": [true,
             {
-                "tabWidth":4,"trailingComma":"all"
+                "allowParens": "always",
+                "tabWidth": 4,
+                "trailingComma": "all"
             }
         ],
         "quotemark": false,
