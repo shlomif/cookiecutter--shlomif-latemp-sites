@@ -1,7 +1,8 @@
 {
     "defaultSeverity": "error",
     "extends": [
-        "tslint:recommended"
+        "tslint:recommended",
+        "tslint-plugin-prettier"
     ],
     "jsRules": {},
     "rules": {
@@ -10,6 +11,11 @@
         "no-bitwise": false,
         "no-conditional-assignment": false,
         "no-string-throw": false,
+        "prettier": [true,
+            {
+                "tabWidth":4,"trailingComma":"all"
+            }
+        ],
         "quotemark": false,
         "variable-name": false
     },
