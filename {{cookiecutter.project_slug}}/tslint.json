@@ -13,7 +13,7 @@
         "no-string-throw": false,
         "prettier": [true,
             {
-                "allowParens": "always",
+                "arrowParens": "always",
                 "tabWidth": 4,
                 "trailingComma": "all"
             }
