@@ -5,11 +5,14 @@
     ],
     "jsRules": {},
     "rules": {
+        "arrow-return-shorthand": false,
         "class-name": false,
         "max-classes-per-file": 90000,
         "no-bitwise": false,
         "no-conditional-assignment": false,
         "no-string-throw": false,
+        "no-this-assignment": false,
+        "prefer-template": false,
         "prettier": [true,
             {
                 "arrowParens": "always",
