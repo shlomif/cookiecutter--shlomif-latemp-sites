@@ -34,7 +34,7 @@
 [% SET my_ext = my_ext_record.l %]
 [% SET my_ext_uc = my_ext_record.u %]
 
-[% POST_DEST %][% d.path %]/[% d.dest_base || d.base %].[% my_ext %]: $([% db_macro_prefix %]_[% my_ext_uc %]_DIR)/[% d.base %].[% my_ext %]
+[% POST_DEST %]/[% d.path %]/[% d.dest_base || d.base %].[% my_ext %]: $([% db_macro_prefix %]_[% my_ext_uc %]_DIR)/[% d.base %].[% my_ext %]
 [% "\t" %]$(call COPY)
 
 [% END %]
