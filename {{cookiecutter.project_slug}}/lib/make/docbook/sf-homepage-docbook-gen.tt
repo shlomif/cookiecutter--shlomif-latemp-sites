@@ -8,7 +8,10 @@
 [% END %]
 [% docs = ((db_ver == 4) ? docs_4 : docs_5) %]
 [% db_ver_path = ( db_ver _ "/" ) %]
+
 [% SET db_macro_prefix = "DOCBOOK" _ db_ver %]
+
+[% db_macro_prefix %]_BUILD_DIR_BASE = lib/docbook/[% db_ver_path %]
 
 [% db_macro_prefix %]_DIRS_LIST =[% FOREACH d = docs %] [% d.path %][% END %]
 
@@ -22,7 +25,7 @@
 [% db_macro_prefix %]_INSTALLED_HTMLS =[% FOREACH d = docs %] [% INCLUDE fmt_dest_dir %]/[% d.path %]/[% d.base %].raw.html[% END %]
 [% END %]
 
-[% db_macro_prefix %]_[% fmt.var %]_DIR = lib/docbook/[% db_ver_path %][% fmt.dir %]
+[% db_macro_prefix %]_[% fmt.var %]_DIR = $([% db_macro_prefix %]_BUILD_DIR_BASE)[% fmt.dir %]
 
 [% END %]
 
