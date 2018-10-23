@@ -1,3 +1,7 @@
+DOCMAKE ?= docmake
+
+DOCMAKE_PARAMS = -v
+DOCMAKE_WITH_PARAMS = $(DOCMAKE) $(DOCMAKE_PARAMS)
 
 DOCBOOK5_BASE_DIR = lib/docbook/5
 DOCBOOK5_ALL_IN_ONE_XHTML_DIR = $(DOCBOOK5_BASE_DIR)/essays
@@ -5,6 +9,15 @@ DOCBOOK5_SOURCES_DIR = $(DOCBOOK5_BASE_DIR)/xml
 DOCBOOK5_FOR_OOO_XHTML_DIR = $(DOCBOOK5_BASE_DIR)/for-ooo-xhtml
 DOCBOOK5_RENDERED_DIR = $(DOCBOOK5_BASE_DIR)/rendered
 
+DOCBOOK5_XSL_STYLESHEETS_PATH := /usr/share/sgml/docbook/xsl-ns-stylesheets
+
+DOCBOOK5_XSL_STYLESHEETS_XHTML_PATH := $(DOCBOOK5_XSL_STYLESHEETS_PATH)/xhtml-1_1
+DOCBOOK5_XSL_STYLESHEETS_ONECHUNK_PATH := $(DOCBOOK5_XSL_STYLESHEETS_PATH)/onechunk
+DOCBOOK5_XSL_STYLESHEETS_FO_PATH := $(DOCBOOK5_XSL_STYLESHEETS_PATH)/fo
+
+DOCBOOK5_XSL_CUSTOM_XSLT_STYLESHEET := lib/sgml/shlomif-docbook/xsl-5-stylesheets/shlomif-essays-5-xhtml.xsl
+DOCBOOK5_XSL_ONECHUNK_XSLT_STYLESHEET := lib/sgml/shlomif-docbook/xsl-5-stylesheets/shlomif-essays-5-xhtml-onechunk.xsl
+DOCBOOK5_XSL_FO_XSLT_STYLESHEET := lib/sgml/shlomif-docbook/xsl-5-stylesheets/shlomif-essays-5-fo.xsl
 include lib/make/docbook/sf-homepage-docbooks-generated.mak
 
 DOCBOOK4_INSTALLED_CSS_DIRS = $(DOCBOOK4_DIRS_LIST:%=$(T2_POST_DEST)/%/docbook-css)
@@ -58,4 +71,31 @@ install_docbook5_rtfs: make-dirs  $(DOCBOOK5_INSTALLED_RTFS)
 install_docbook_individual_xhtmls: make-dirs $(DOCBOOK4_INSTALLED_INDIVIDUAL_XHTMLS) $(DOCBOOK4_INSTALLED_INDIVIDUAL_XHTMLS_CSS) $(DOCBOOK5_INSTALLED_INDIVIDUAL_XHTMLS) $(DOCBOOK5_INSTALLED_INDIVIDUAL_XHTMLS_CSS)
 
 install_docbook_css_dirs: make-dirs $(DOCBOOK4_INSTALLED_CSS_DIRS)
+
+docbook_extended: $(DOCBOOK4_FOS) $(DOCBOOK4_PDFS) \
+	$(DOCBOOK5_FOS) $(DOCBOOK5_PDFS) \
+	install_docbook4_pdfs install_docbook4_rtfs \
+	install_docbook5_pdfs install_docbook5_rtfs
+
+docbook_targets: docbook4_targets docbook5_targets \
+	install_docbook5_epubs \
+	install_docbook5_htmls \
+	install_docbook4_xmls install_docbook_individual_xhtmls \
+	install_docbook_css_dirs install_docbook5_xmls \
+
+$(DOCBOOK5_RTF_DIR)/%.rtf: $(DOCBOOK5_FO_DIR)/%.fo
+	fop -fo $< -rtf $@
+
+$(DOCBOOK5_FOR_OOO_XHTML_DIR)/%.html: $(DOCBOOK5_ALL_IN_ONE_XHTML_DIR)/%/all-in-one.xhtml
+	cat $< | $(PERL) -lne 's{(</title>)}{$${1}<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />}; print unless m{\A<\?xml}' > $@
+
+EPUB_SCRIPT = $(DOCBOOK5_XSL_STYLESHEETS_PATH)/epub/bin/dbtoepub
+EPUB_XSLT = lib/sgml/shlomif-docbook/docbook-epub-preproc.xslt
+DBTOEPUB = ruby $(EPUB_SCRIPT)
+
+$(DOCBOOK5_EPUBS): $(DOCBOOK5_EPUB_DIR)/%.epub: $(DOCBOOK5_XML_DIR)/%.xml
+	$(DBTOEPUB) -s $(EPUB_XSLT) -o $@ $<
+
+$(DOCBOOK5_PDF_DIR)/%.pdf: $(DOCBOOK5_FO_DIR)/%.fo
+	fop -fo $< -pdf $@
 

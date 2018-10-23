@@ -1,4 +1,5 @@
 SHELL = /bin/bash
+PERL := perl
 
 COMMON_PREPROC_FLAGS = -I $$HOME/conf/wml/Latemp/lib -I../lib
 LATEMP_WML_FLAGS := $(shell latemp-config --wml-flags)
