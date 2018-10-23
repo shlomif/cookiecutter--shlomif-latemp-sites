@@ -15,7 +15,7 @@
 
 [% db_macro_prefix %]_DIRS_LIST =[% FOREACH d = docs %] [% d.path %][% END %]
 
-[% db_macro_prefix %]_DOCS =[% FOREACH d = docs %] [% d.base %][% END %]
+[% db_macro_prefix %]_DOCS +=[% FOREACH d = docs %] [% d.base %][% END %]
 
 [% FOREACH fmt = fmts %]
 [% BLOCK fmt_dest_dir %][% IF fmt.var == 'INDIVIDUAL_XHTML' %][% DEST %][% ELSE %][% POST_DEST %][% END %][% END %]
