@@ -82,7 +82,7 @@
     <xsl:choose>
       <!-- chapters and other book children should get <h2> -->
       <xsl:when test="local-name($node/../..) = 'book'">1</xsl:when>
-      <xsl:when test="local-name($node/../..) = 'article'">1</xsl:when>
+      <xsl:when test="local-name($node/..) = 'info' and local-name($node/../..) = 'article'">1</xsl:when>
       <xsl:otherwise>2</xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
