@@ -52,4 +52,110 @@
             </xsl:attribute>
         </xsl:if>
 </xsl:template>
+
+<xsl:template match="d:revhistory" mode="titlepage.mode">
+  <xsl:variable name="numcols">
+    <xsl:choose>
+      <xsl:when test=".//d:authorinitials|.//d:author">3</xsl:when>
+      <xsl:otherwise>2</xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
+  <xsl:variable name="id"><xsl:call-template name="object.id"/></xsl:variable>
+
+  <xsl:variable name="title">
+    <xsl:call-template name="gentext">
+      <xsl:with-param name="key">RevHistory</xsl:with-param>
+    </xsl:call-template>
+  </xsl:variable>
+
+  <xsl:variable name="contents">
+    <div>
+      <xsl:apply-templates select="." mode="common.html.attributes"/>
+      <xsl:call-template name="id.attribute"/>
+      <table>
+        <xsl:if test="$css.decoration != 0">
+          <xsl:attribute name="style">
+            <xsl:text>border-style:solid; width:100%;</xsl:text>
+          </xsl:attribute>
+        </xsl:if>
+        <!-- include summary attribute if not HTML5 -->
+        <xsl:if test="$div.element != 'section'">
+          <xsl:attribute name="summary">
+            <xsl:call-template name="gentext">
+              <xsl:with-param name="key">revhistory</xsl:with-param>
+            </xsl:call-template>
+          </xsl:attribute>
+        </xsl:if>
+        <tr>
+          <th align="{$direction.align.start}" valign="top" colspan="{$numcols}">
+            <strong xmlns:xslo="http://www.w3.org/1999/XSL/Transform">
+              <xsl:call-template name="gentext">
+                <xsl:with-param name="key" select="'RevHistory'"/>
+              </xsl:call-template>
+            </strong>
+          </th>
+        </tr>
+        <xsl:apply-templates mode="titlepage.mode">
+          <xsl:with-param name="numcols" select="$numcols"/>
+        </xsl:apply-templates>
+      </table>
+    </div>
+  </xsl:variable>
+
+  <xsl:choose>
+    <xsl:when test="$generate.revhistory.link != 0">
+
+      <!-- Compute name of revhistory file -->
+      <xsl:variable name="file">
+	<xsl:call-template name="ln.or.rh.filename">
+	  <xsl:with-param name="is.ln" select="false()"/>
+	</xsl:call-template>
+      </xsl:variable>
+
+      <xsl:variable name="filename">
+        <xsl:call-template name="make-relative-filename">
+          <xsl:with-param name="base.dir" select="$chunk.base.dir"/>
+          <xsl:with-param name="base.name" select="$file"/>
+        </xsl:call-template>
+      </xsl:variable>
+
+      <a href="{$file}">
+        <xsl:copy-of select="$title"/>
+      </a>
+
+      <xsl:call-template name="write.chunk">
+        <xsl:with-param name="filename" select="$filename"/>
+        <xsl:with-param name="quiet" select="$chunk.quietly"/>
+        <xsl:with-param name="content">
+        <xsl:call-template name="user.preroot"/>
+          <html>
+              <xsl:call-template name="root.attributes"/>
+            <head>
+              <xsl:call-template name="system.head.content"/>
+              <xsl:call-template name="head.content">
+                <xsl:with-param name="title">
+                    <xsl:value-of select="$title"/>
+                    <xsl:if test="../../d:title">
+                        <xsl:value-of select="concat(' (', ../../d:title, ')')"/>
+                    </xsl:if>
+                </xsl:with-param>
+              </xsl:call-template>
+              <xsl:call-template name="user.head.content"/>
+            </head>
+            <body>
+              <xsl:call-template name="body.attributes"/>
+              <xsl:copy-of select="$contents"/>
+            </body>
+          </html>
+          <xsl:text>
+</xsl:text>
+        </xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:copy-of select="$contents"/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
 </xsl:stylesheet>
