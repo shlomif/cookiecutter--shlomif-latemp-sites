@@ -46,5 +46,10 @@
                 <xsl:value-of select="//*/@xml:lang"/>
             </xsl:if>
         </xsl:attribute>
+        <xsl:if test="//*/@lang = 'he-IL'">
+            <xsl:attribute name="dir">
+                <xsl:text>rtl</xsl:text>
+            </xsl:attribute>
+        </xsl:if>
 </xsl:template>
 </xsl:stylesheet>
