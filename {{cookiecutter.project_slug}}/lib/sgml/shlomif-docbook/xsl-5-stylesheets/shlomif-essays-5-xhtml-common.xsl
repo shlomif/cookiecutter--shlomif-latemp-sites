@@ -39,14 +39,11 @@
     -->
 <xsl:template name="root.attributes">
         <xsl:attribute name="lang">
-            <xsl:if test="//*/@lang">
-                <xsl:value-of select="//*/@lang"/>
-            </xsl:if>
             <xsl:if test="//*/@xml:lang">
                 <xsl:value-of select="//*/@xml:lang"/>
             </xsl:if>
         </xsl:attribute>
-        <xsl:if test="//*/@lang = 'he-IL' or //*/@lang = 'ar'">
+        <xsl:if test="//*/@xml:lang = 'he-IL' or //*/@xml:lang = 'ar'">
             <xsl:attribute name="dir">
                 <xsl:text>rtl</xsl:text>
             </xsl:attribute>
