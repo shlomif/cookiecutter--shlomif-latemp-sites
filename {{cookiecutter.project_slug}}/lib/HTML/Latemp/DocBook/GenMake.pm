@@ -18,7 +18,7 @@ sub generate
 {
     my ( $self, $args ) = @_;
 
-    my $tt = Template->new( {} );
+    my $tt        = Template->new( {} );
     my $documents = HTML::Latemp::DocBook::DocsList->new->docs_list;
 
     $tt->process(

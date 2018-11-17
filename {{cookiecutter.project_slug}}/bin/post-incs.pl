@@ -97,7 +97,7 @@ system(
 
 if ( $ENV{APPLY_ADS} )
 {
-    my $dir = "lib/ads/";
+    my $dir   = "lib/ads/";
     my %TEXTS = ( map { $_ => path("$dir/texts/$_")->slurp_utf8 }
             path("$dir/texts-lists.txt")->lines_utf8( { chomp => 1 } ) );
     foreach my $fn ( @filenames, @ad_filenames )
