@@ -7,7 +7,7 @@ STAMP = lib/make/build-deps/build-deps.stamp
 all: $(STAMP)
 
 $(STAMP): $(MODULES_LIST)
-	$(BIN) verify -o $@ --input $(MODULES_LIST)
+	$(BIN) verify -o $@ --input $(MODULES_LIST) --input bin/common-required-deps.yml
 
 clean:
 	rm -f $(STAMP)
