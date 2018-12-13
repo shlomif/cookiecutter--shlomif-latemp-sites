@@ -1,0 +1,86 @@
+---
+required:
+    executables:
+        - exe: "cookiecutter"
+          url: "https://github.com/audreyr/cookiecutter"
+        - exe: "latemp-config"
+          url: "http://web-cpan.shlomifish.org/latemp/"
+        - exe: "node"
+          url: "https://nodejs.org/en/"
+        - exe: "npm"
+          url: "https://nodejs.org/en/"
+        - exe: "sass"
+          url: "http://sass-lang.com/"
+        - exe: "wml"
+          url: "http://www.shlomifish.org/open-source/projects/website-meta-language/"
+        - exe: "wml-params-conf"
+          url: "http://www.shlomifish.org/open-source/projects/website-meta-language/"
+        - exe: "xsltproc"
+          url: "http://xmlsoft.org/XSLT/"
+    meta_data:
+        keys:
+            package_name: task-shlomif-homesite
+            summary: 'Require shlomif homesite deps'
+            url: 'http://www.shlomifish.org/'
+            desc: 'This task package installs some of the packages that Shlomi Fish needs.'
+    perl5_modules:
+        CGI: 0
+        Carp: 0
+        Carp::Always: 0
+        Cwd: 0
+        Data::Dumper: 0
+        Data::Munge: 0
+        Encode: 0
+        English: 0
+        Exporter: 0
+        File::Basename: 0
+        File::Copy: 0
+        File::Find: 0
+        File::Find::Object: 0
+        File::Find::Object::Rule: 0
+        File::Spec: 0
+        File::Spec::Functions: 0
+        File::Update: 0
+        File::Which: 0
+        Getopt::Long: 0
+        HTML::Latemp::GenMakeHelpers: 0
+        HTML::Latemp::NavLinks::GenHtml::ArrowImages: 0
+        HTML::Spelling::Site: 0
+        HTML::TokeParser::Simple: 0
+        HTML::TreeBuilder::LibXML: 0
+        HTML::Widgets::NavMenu: 0
+        HTML::Widgets::NavMenu::EscapeHtml: 0
+        HTML::Widgets::NavMenu::ToJSON: 0
+        HTML::Widgets::NavMenu::ToJSON::Data_Persistence::YAML: 0
+        IO::All: 0
+        IO::Handle: 0
+        JSON::MaybeXS: 0
+        List::MoreUtils: 0
+        List::Util: 0
+        POSIX: 0
+        Path::Tiny: 0
+        Template: 0
+        Test::Code::TidyAll: 0
+        Test::File::Find::CaseCollide: 0
+        Test::HTML::Recursive::DeprecatedTags: 0
+        Test::HTML::Tidy::Recursive: 'v0.2.1'
+        Test::HTML::Tidy::Recursive::Strict: 0
+        Test::More: 0
+        Test::Perl::Critic: 0
+        Test::TrailingSpace: 0
+        Text::Hunspell: 0
+        Text::VimColor: 0.29
+        Text::WrapAsUtf8: 0
+        XML::LibXML: 0
+        XML::LibXML::Reader: 0
+        XML::LibXML::XPathContext: 0
+        XML::LibXSLT: 0
+        XML::Writer: 0
+        autodie: 0
+        constant: 0
+        lib: 0
+        parent: 0
+        strict: 0
+        utf8: 0
+        vars: 0
+        warnings: 0
