@@ -16,7 +16,6 @@ sub run
             map {
                 my $n = $_;
 
-                # my $tag = "wml_toc_h$n";
                 my $tag = "h$n";
                 <<"EOF"
 <define-tag h${n}_section endtag="required" whitespace="delete">

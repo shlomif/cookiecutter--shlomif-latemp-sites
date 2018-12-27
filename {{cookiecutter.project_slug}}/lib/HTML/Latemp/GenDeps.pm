@@ -36,11 +36,7 @@ sub run
     my @files = File::Find::Object::Rule->name('*.wml')->in( $self->src_dir );
 
     my $rule    = File::Find::Object::Rule->new;
-    my $discard = $rule->new->directory
-
-        # Temporarily added for debugging:
-        # ->exec(sub { print "$_[2]\n"; })
-        ->name(
+    my $discard = $rule->new->directory->name(
         qr{\A(?:screenplay-xml/from-vcs|fiction-xml|presentations|MathJax)\z})
         ->prune->discard;
 

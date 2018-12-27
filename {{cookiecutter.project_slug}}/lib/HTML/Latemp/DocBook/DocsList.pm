@@ -41,6 +41,3 @@ sub docs_list
 }
 
 1;
-
-# __END__
-# # Below is stub documentation for your module. You'd better edit it!
