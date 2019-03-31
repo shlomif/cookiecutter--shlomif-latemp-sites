@@ -52,7 +52,7 @@
 [%- SET foo_dest = DEST _ '/' _ d.path _ '/' _ ( d.dest_base || d.base) -%]
 [%- SET foo_src = '$(' _ db_macro_prefix _ '_INDIVIDUAL_XHTML_DIR)/' _ d.base %]
 
-[% SET rm_line = "\tcp -f lib/sgml/shlomif-docbook/xsl-stylesheets/style.css " _ foo_dest _ "/style.css || true" %]
+[% SET rm_line = "\tcp -f lib/sgml/shlomif-docbook/xsl-stylesheets/style.css " _ foo_dest _ "/style.css" %]
 [% IF d.custom_css %]
 [% SET rm_line = "" %]
 [% END %]
@@ -72,7 +72,7 @@
 [% IF d.del_revhistory %][% "\t\t" %]--stringparam "generate.revhistory.link=1" \[% "\n" %][% END -%]
 [% "\t\t" %]-x [% xslt_ss %] -o [% foo_src %]/notneeded.x [% IF db_ver == '5' %]xhtml5[% ELSE %]xhtml-1_1[% END %] $< \
 [% "\t" %]&& touch $@
-[% "\t" %]for fn in $$(ls [% foo_src %]/* | grep -E '\.x?html$$') ; do echo "$$fn"; if true; then xsltproc --output "$$fn.new" bin/clean-up-docbook-xhtml-1.1.xslt "$$fn" || true ; mv -f "$$fn.new" "$$fn" ; fi; perl -0777 -pi -e 's#<p>\s*?</p>##gms' "$$fn" ; perl -lpi -e 's/[ \t]+\z//' "$$fn" ; done
+[% "\t" %]for fn in $$(ls [% foo_src %]/* | grep -E '\.x?html$$') ; do echo "$$fn"; xsltproc --output "$$fn.new" bin/clean-up-docbook-xhtml-1.1.xslt "$$fn" || true ; mv -f "$$fn.new" "$$fn" ; perl -0777 -pi -e 's#<p>\s*?</p>##gms' "$$fn" ; perl -lpi -e 's/[ \t]+\z//' "$$fn" ; done
 [% END %]
 
 [% END # db_ver loop.

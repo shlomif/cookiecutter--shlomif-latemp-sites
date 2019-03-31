@@ -17,7 +17,7 @@ endef
 # cp: cannot create regular file 'dest/vipe/images/get-firefox.png': File exists
 #
 define COPY
-	cp -f $< $@ || true
+	cp -f $< $@
 endef
 
 TEST_ENV =
