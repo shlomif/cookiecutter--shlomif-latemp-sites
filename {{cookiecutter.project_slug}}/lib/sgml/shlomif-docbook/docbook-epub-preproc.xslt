@@ -13,6 +13,67 @@
 <!-- Get rid of the revhistory element -->
 <xsl:template match="d:revhistory" mode="titlepage.mode" />
 
+  <xsl:template name="package-identifier">
+    <xsl:variable name="info" select="*/*[contains(local-name(.), 'info')][1]"/>
+
+    <xsl:choose>
+      <xsl:when test="$info/d:biblioid">
+        <xsl:if test="$info/d:biblioid[1][@class = 'doi' or
+                                          @class = 'isbn' or
+                                          @class = 'isrn' or
+                                          @class = 'issn']">
+          <xsl:text>urn:</xsl:text>
+          <xsl:value-of select="$info/d:biblioid[1]/@class"/>
+          <xsl:text>:</xsl:text>
+        </xsl:if>
+        <xsl:value-of select="$info/d:biblioid[1]"/>
+      </xsl:when>
+      <xsl:when test="$info/d:isbn">
+        <xsl:text>urn:isbn:</xsl:text>
+        <xsl:value-of select="$info/d:isbn[1]"/>
+      </xsl:when>
+      <xsl:when test="$info/d:issn">
+        <xsl:text>urn:issn:</xsl:text>
+        <xsl:value-of select="$info/d:issn[1]"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:choose>
+          <xsl:when test="$info/d:invpartnumber">
+            <xsl:value-of select="$info/d:invpartnumber[1]"/>
+          </xsl:when>
+          <xsl:when test="$info/d:issuenum">
+            <xsl:value-of select="$info[1]/d:issuenum[1]"/>
+          </xsl:when>
+          <xsl:when test="$info/d:productnumber">
+            <xsl:value-of select="$info[1]/d:productnumber[1]"/>
+          </xsl:when>
+          <xsl:when test="$info/d:seriesvolnums">
+            <xsl:value-of select="$info[1]/d:seriesvolnums[1]"/>
+          </xsl:when>
+          <xsl:when test="$info/d:volumenum">
+            <xsl:value-of select="$info[1]/d:volumenum[1]"/>
+          </xsl:when>
+          <!-- Deprecated -->
+          <xsl:when test="$info/d:pubsnumber">
+            <xsl:value-of select="$info[1]/d:pubsnumber[1]"/>
+          </xsl:when>
+        </xsl:choose>
+        <xsl:text>_</xsl:text>
+        <xsl:choose>
+          <xsl:when test="@id">
+            <xsl:value-of select="@id"/>
+          </xsl:when>
+          <xsl:when test="@xml:id">
+            <xsl:value-of select="@xml:id"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <!-- TODO: Do UUIDs here -->
+              <xsl:text>shlomif_id</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
   <xsl:template match="d:book|
                        d:article|
                        d:part|
