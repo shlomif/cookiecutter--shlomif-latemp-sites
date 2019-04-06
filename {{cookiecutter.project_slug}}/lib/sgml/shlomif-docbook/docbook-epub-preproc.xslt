@@ -115,24 +115,6 @@
         <!-- Generate links relative to the location of root file/toc.xml file -->
       </xsl:call-template>
     </xsl:variable>
-    <xsl:variable name="playOrder">
-        <xsl:choose>
-          <xsl:when test="/*[self::d:set]">
-            <xsl:value-of select="$order"/>
-          </xsl:when>
-          <xsl:when test="$root.is.a.chunk != '0'">
-            <xsl:value-of select="$order + 1"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="$order - 0"/>
-          </xsl:otherwise>
-  </xsl:choose>
-  </xsl:variable>
-
-    <xsl:variable name="id">
-        <xsl:text>myididid</xsl:text>
-        <xsl:value-of select="$playOrder"/>
-    </xsl:variable>
     <xsl:variable name="order">
       <xsl:value-of select="$depth +
                                   count(preceding::d:part|
@@ -154,6 +136,24 @@
                                   preceding::d:colophon|
                                   preceding::d:bibliodiv[d:title]|
                                   preceding::d:index)"/>
+    </xsl:variable>
+    <xsl:variable name="playOrder">
+        <xsl:choose>
+          <xsl:when test="/*[self::d:set]">
+            <xsl:value-of select="$order"/>
+          </xsl:when>
+          <xsl:when test="$root.is.a.chunk != '0'">
+            <xsl:value-of select="$order + 1"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$order - 0"/>
+          </xsl:otherwise>
+  </xsl:choose>
+  </xsl:variable>
+
+    <xsl:variable name="id">
+        <xsl:text>myididid</xsl:text>
+        <xsl:value-of select="$playOrder"/>
     </xsl:variable>
 
     <xsl:element name="navPoint" namespace="http://www.daisy.org/z3986/2005/ncx/">
