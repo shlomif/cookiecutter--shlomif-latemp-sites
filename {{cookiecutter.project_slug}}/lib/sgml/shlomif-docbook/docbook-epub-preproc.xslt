@@ -237,6 +237,6 @@
         <xsl:attribute name="href"> <xsl:value-of select="$href"/> </xsl:attribute>
         <xsl:attribute name="media-type">application/xhtml+xml</xsl:attribute>
       </xsl:element>
-    </xsl:if>  
-  </xsl:template>  
+    </xsl:if>
+  </xsl:template>
 </xsl:stylesheet>
