@@ -54,10 +54,23 @@
         <!-- Generate links relative to the location of root file/toc.xml file -->
       </xsl:call-template>
     </xsl:variable>
+    <xsl:variable name="playOrder">
+        <xsl:choose>
+          <xsl:when test="/*[self::d:set]">
+            <xsl:value-of select="$order"/>
+          </xsl:when>
+          <xsl:when test="$root.is.a.chunk != '0'">
+            <xsl:value-of select="$order + 1"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$order - 0"/>
+          </xsl:otherwise>
+  </xsl:choose>
+  </xsl:variable>
 
     <xsl:variable name="id">
         <xsl:text>myididid</xsl:text>
-        <xsl:value-of select="@id"/>
+        <xsl:value-of select="$playOrder"/>
     </xsl:variable>
     <xsl:variable name="order">
       <xsl:value-of select="$depth +
@@ -88,17 +101,7 @@
       </xsl:attribute>
 
       <xsl:attribute name="playOrder">
-        <xsl:choose>
-          <xsl:when test="/*[self::d:set]">
-            <xsl:value-of select="$order"/>
-          </xsl:when>
-          <xsl:when test="$root.is.a.chunk != '0'">
-            <xsl:value-of select="$order + 1"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="$order - 0"/>
-          </xsl:otherwise>
-        </xsl:choose>
+        <xsl:value-of select="$playOrder"/>
       </xsl:attribute>
       <xsl:element name="navLabel" namespace="http://www.daisy.org/z3986/2005/ncx/">
         <xsl:element name="text" namespace="http://www.daisy.org/z3986/2005/ncx/"><xsl:value-of select="normalize-space($title)"/> </xsl:element>
