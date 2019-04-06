@@ -239,4 +239,32 @@
       </xsl:element>
     </xsl:if>
   </xsl:template>
+
+  <xsl:template match="*" mode="opf.spine">
+    <xsl:variable name="is.chunk">
+      <xsl:call-template name="chunk">
+        <xsl:with-param name="node" select="."/>
+      </xsl:call-template>
+    </xsl:variable>
+
+    <xsl:if test="$is.chunk != 0">
+      <xsl:element namespace="http://www.idpf.org/2007/opf" name="itemref">
+        <xsl:attribute name="idref">
+            <xsl:choose>
+                <xsl:when test="@id">
+                    <xsl:value-of select="@id"/>
+                </xsl:when>
+                <xsl:when test="@xml:id">
+                    <xsl:value-of select="@xml:id"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <!-- TODO: Do UUIDs here -->
+                    <xsl:text>shlomif_id</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:attribute>
+      </xsl:element>
+      <xsl:apply-templates select="*" mode="opf.spine"/>
+    </xsl:if>
+  </xsl:template>
 </xsl:stylesheet>
