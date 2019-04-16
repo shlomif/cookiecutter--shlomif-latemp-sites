@@ -25,19 +25,6 @@ sub run
 <preserve _wml_id_h$n id href title />
 <set-var %attributes />
 
-<:
-
-0 and die qq|
-%attributes
-
-<get-var h_tag />
-
-<get-var id />
-
-ENDU
-|
-:>
-
 <set-var _wml_id_h$n=<get-var id /> />
 <section class="<get-var h_class />">
 
