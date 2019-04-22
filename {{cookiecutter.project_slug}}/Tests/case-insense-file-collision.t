@@ -3,7 +3,8 @@
 use strict;
 use warnings;
 use Test::More tests => 1;
-use Test::File::Find::CaseCollide ();
 
 # TEST
-Test::File::Find::CaseCollide->verify( { dir => '.' } );
+is( system(q#find . -print0 | perl -n0e 'die $_ if $h{lc$_}++'#),
+    0, "case sensitive filename collision" );
+
