@@ -11,10 +11,6 @@ required:
           url: "https://nodejs.org/en/"
         - exe: "sass"
           url: "http://sass-lang.com/"
-        - exe: "wml"
-          url: "http://www.shlomifish.org/open-source/projects/website-meta-language/"
-        - exe: "wml-params-conf"
-          url: "http://www.shlomifish.org/open-source/projects/website-meta-language/"
         - exe: "xsltproc"
           url: "http://xmlsoft.org/XSLT/"
     meta_data:
