@@ -45,7 +45,7 @@ required:
         Getopt::Long: 0
         HTML::Latemp::GenMakeHelpers: 0
         HTML::Latemp::NavLinks::GenHtml::ArrowImages: 0
-        HTML::Spelling::Site: 0
+        HTML::Spelling::Site: 'v0.4.0'
         HTML::TokeParser::Simple: 0
         HTML::TreeBuilder::LibXML: 0
         HTML::Widgets::NavMenu: 0
