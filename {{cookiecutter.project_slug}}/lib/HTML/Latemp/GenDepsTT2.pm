@@ -55,7 +55,7 @@ sub run
         my $contents = path($fn)->slurp_utf8;
 
         foreach my $match ( $contents =~
-m{^\[%\s+(?:INCLUDE\s*|PROCESS\s*|INSERT\s*|path_slurp\s*\(\s*))"([^"]+)"}gms
+m{^\[%\s+(?:INCLUDE\s*|PROCESS\s*|INSERT\s*|path_slurp\s*\(\s*)"([^"]+)"}gms
             )
         {
             if ( exists( $files_containing_headers{$match} )
