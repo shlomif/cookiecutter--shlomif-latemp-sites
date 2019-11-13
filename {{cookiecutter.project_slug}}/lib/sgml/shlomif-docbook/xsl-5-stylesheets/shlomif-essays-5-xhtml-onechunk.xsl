@@ -81,9 +81,16 @@
   <xsl:variable name="level">
     <xsl:choose>
       <!-- chapters and other book children should get <h2> -->
-      <xsl:when test="local-name($node/../..) = 'book'">1</xsl:when>
-      <xsl:when test="local-name($node/..) = 'info' and local-name($node/../..) = 'article'">1</xsl:when>
-      <xsl:otherwise>2</xsl:otherwise>
+      <xsl:when test="$node/parent::d:book">1</xsl:when>
+      <xsl:when test="ancestor::d:section">
+        <xsl:value-of select="count(ancestor::d:section)+1"/>
+      </xsl:when>
+      <xsl:when test="ancestor::d:sect5">6</xsl:when>
+      <xsl:when test="ancestor::d:sect4">5</xsl:when>
+      <xsl:when test="ancestor::d:sect3">4</xsl:when>
+      <xsl:when test="ancestor::d:sect2">3</xsl:when>
+      <xsl:when test="ancestor::d:sect1">2</xsl:when>
+      <xsl:otherwise>1</xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
 
