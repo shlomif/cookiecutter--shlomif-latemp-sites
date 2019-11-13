@@ -83,7 +83,7 @@
       <!-- chapters and other book children should get <h2> -->
       <xsl:when test="$node/parent::d:book">1</xsl:when>
       <xsl:when test="ancestor::d:section">
-        <xsl:value-of select="count(ancestor::d:section)+1"/>
+        <xsl:value-of select="count(ancestor::d:section)+2"/>
       </xsl:when>
       <xsl:when test="ancestor::d:sect5">6</xsl:when>
       <xsl:when test="ancestor::d:sect4">5</xsl:when>
