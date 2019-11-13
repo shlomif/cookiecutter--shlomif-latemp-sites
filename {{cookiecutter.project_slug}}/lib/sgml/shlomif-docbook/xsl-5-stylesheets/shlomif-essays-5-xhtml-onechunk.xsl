@@ -94,7 +94,7 @@
     </xsl:choose>
   </xsl:variable>
 
-  <xsl:element name="h{$level+1}">
+  <xsl:element name="h{$level}">
     <xsl:apply-templates select="." mode="common.html.attributes"/>
     <xsl:choose>
       <xsl:when test="$generate.id.attributes = 0">
