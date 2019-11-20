@@ -12,6 +12,7 @@
     <xsl:param name="generate.id.attributes" select="0"></xsl:param>
     <xsl:param name="html.cellspacing"></xsl:param>
     <xsl:param name="html.cellpadding"></xsl:param>
+    <xsl:param name="img.src.path">./</xsl:param>
     <xsl:param name="make.clean.html" select="1"></xsl:param>
 
     <xsl:template name="pi.dbhtml_cellpadding">
