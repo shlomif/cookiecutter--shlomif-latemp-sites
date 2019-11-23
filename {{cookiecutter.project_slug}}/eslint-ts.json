@@ -1,18 +1,37 @@
 {
-    "defaultSeverity": "error",
     "extends": [
         "tslint-config-radiosilence"
     ],
-    "jsRules": {},
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module"
+    },
     "rules": {
+        "@typescript-eslint/camelcase": 0,
+        "@typescript-eslint/class-name-casing": 0,
+        "@typescript-eslint/explicit-function-return-type": 0,
+        "@typescript-eslint/no-empty-function": 0,
+        "@typescript-eslint/no-explicit-any": 0,
+        "@typescript-eslint/no-inferrable-types": 0,
+        "@typescript-eslint/no-this-alias": 0,
+        "@typescript-eslint/no-unused-vars": 0,
+        "@typescript-eslint/no-use-before-define": 0,
         "arrow-return-shorthand": false,
         "class-name": false,
-        "max-classes-per-file": 90000,
-        "no-bitwise": false,
+        "max-classes-per-file": 0,
+        "no-bitwise": 0,
         "no-conditional-assignment": false,
+        "no-constant-condition": 0,
+        "no-inner-declarations": 0,
         "no-string-throw": false,
         "no-this-assignment": false,
-        "prefer-template": false,
+        "no-undef": 0,
+        "no-useless-escape": 0,
+        "prefer-const": 0,
+        "prefer-template": 0,
         "prettier": [true,
             {
                 "arrowParens": "always",
@@ -22,6 +41,5 @@
         ],
         "quotemark": false,
         "variable-name": false
-    },
-    "rulesDirectory": []
+    }
 }
