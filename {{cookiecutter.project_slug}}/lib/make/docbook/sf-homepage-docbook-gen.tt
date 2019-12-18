@@ -10,6 +10,7 @@
 [% db_ver_path = ( db_ver _ "/" ) %]
 
 [% SET db_macro_prefix = "DOCBOOK" _ db_ver %]
+[% SET hash_of_dirs = {} %]
 
 [% db_macro_prefix %]_BUILD_DIR_BASE = lib/docbook/[% db_ver_path %]
 
@@ -52,6 +53,7 @@
 [%- SET foo_partial_path = d.path _ '/' _ ( d.dest_base || d.base) -%]
 [%- SET foo_dest = DEST _ '/' _ foo_partial_path -%]
 [%- SET foo_past_dest = POST_DEST _ '/' _ foo_partial_path -%]
+[%- hash_of_dirs.$foo_past_dest = "1" -%]
 [%- SET foo_src = '$(' _ db_macro_prefix _ '_INDIVIDUAL_XHTML_DIR)/' _ d.base %]
 
 [% SET foo_cp_line = "\tcp -f lib/sgml/shlomif-docbook/xsl-stylesheets/style.css " _ foo_past_dest _ "/style.css" %]
@@ -76,6 +78,8 @@
 [% "\t" %]&& touch $@
 [% "\t" %]for fn in $$(ls [% foo_src %]/* | grep -E '\.x?html$$') ; do xsltproc --output "$$fn.new" bin/clean-up-docbook-xhtml-1.1.xslt "$$fn" || true ; mv -f "$$fn.new" "$$fn" ; perl -0777 -pi -e 's#<p>\s*?</p>##gms; s/[ \t]+$$//gms' "$$fn" ; done
 [% END %]
+
+[% db_macro_prefix %]_INDIVIDUAL_XHTML__POST_DEST__DIRS = [% hash_of_dirs.keys.sort.join(" ") %]
 
 [% END # db_ver loop.
 %]
