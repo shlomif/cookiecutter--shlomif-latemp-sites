@@ -49,17 +49,19 @@
 
 [% END %]
 
-[%- SET foo_dest = DEST _ '/' _ d.path _ '/' _ ( d.dest_base || d.base) -%]
+[%- SET foo_partial_path = d.path _ '/' _ ( d.dest_base || d.base) -%]
+[%- SET foo_dest = DEST _ '/' _ foo_partial_path -%]
+[%- SET foo_past_dest = POST_DEST _ '/' _ foo_partial_path -%]
 [%- SET foo_src = '$(' _ db_macro_prefix _ '_INDIVIDUAL_XHTML_DIR)/' _ d.base %]
 
-[% SET rm_line = "\tcp -f lib/sgml/shlomif-docbook/xsl-stylesheets/style.css " _ foo_dest _ "/style.css" %]
+[% SET foo_cp_line = "\tcp -f lib/sgml/shlomif-docbook/xsl-stylesheets/style.css " _ foo_past_dest _ "/style.css" %]
 [% IF d.custom_css %]
-[% SET rm_line = "" %]
+[% SET foo_cp_line = "" %]
 [% END %]
 
 [% foo_dest %]/index[% html_ext %]: [% foo_src %]/index[% html_ext %]
 [% "\t" %]rsync --exclude 'style.css' -r [% foo_src %]/ [% foo_dest %]/
-[% rm_line %]
+[% foo_cp_line %]
 
 [% foo_src %]/index[% html_ext %]: $([% db_macro_prefix %]_XML_DIR)/[% d.base %].xml $(XSL_SOURCES)
 [% "\t" %]mkdir -p [% foo_src %]
