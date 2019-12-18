@@ -79,7 +79,8 @@
 [% "\t" %]for fn in $$(ls [% foo_src %]/* | grep -E '\.x?html$$') ; do xsltproc --output "$$fn.new" bin/clean-up-docbook-xhtml-1.1.xslt "$$fn" || true ; mv -f "$$fn.new" "$$fn" ; perl -0777 -pi -e 's#<p>\s*?</p>##gms; s/[ \t]+$$//gms' "$$fn" ; done
 [% END %]
 
-[% db_macro_prefix %]_INDIVIDUAL_XHTML__POST_DEST__DIRS = [% hash_of_dirs.keys.sort.join(" ") %]
+[%- SET str = hash_of_dirs.keys.sort.join(" ") -%]
+[% db_macro_prefix %]_INDIVIDUAL_XHTML__POST_DEST__DIRS =[% IF str != "" %][% " " _ str %][% END %]
 
 [% END # db_ver loop.
 %]
