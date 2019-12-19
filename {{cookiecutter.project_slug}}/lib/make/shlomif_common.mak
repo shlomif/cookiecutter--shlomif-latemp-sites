@@ -20,6 +20,8 @@ define COPY
 	cp -f $< $@
 endef
 
+LATEMP_COPY = $(COPY)
+
 TEST_ENV =
 TEST_TARGETS = Tests/*.t
 
