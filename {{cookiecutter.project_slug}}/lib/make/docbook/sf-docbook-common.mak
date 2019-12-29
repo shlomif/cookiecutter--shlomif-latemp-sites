@@ -3,16 +3,16 @@ DOCMAKE ?= docmake
 DOCMAKE_PARAMS = -v
 DOCMAKE_WITH_PARAMS = $(DOCMAKE) $(DOCMAKE_PARAMS)
 
-DOCMAKE_SGML_PATH = lib/sgml/shlomif-docbook
+DOCMAKE_SGML_PATH := lib/sgml/shlomif-docbook
 
-# DOCBOOK5_RELAXNG = http://www.docbook.org/xml/5.0/rng/docbook.rng
-DOCBOOK5_RELAXNG = lib/sgml/relax-ng/docbook.rng
+# DOCBOOK5_RELAXNG := http://www.docbook.org/xml/5.0/rng/docbook.rng
+DOCBOOK5_RELAXNG := lib/sgml/relax-ng/docbook.rng
 
-DOCBOOK5_BASE_DIR = lib/docbook/5
-DOCBOOK5_ALL_IN_ONE_XHTML_DIR = $(DOCBOOK5_BASE_DIR)/essays
-DOCBOOK5_SOURCES_DIR = $(DOCBOOK5_BASE_DIR)/xml
-DOCBOOK5_FOR_OOO_XHTML_DIR = $(DOCBOOK5_BASE_DIR)/for-ooo-xhtml
-DOCBOOK5_RENDERED_DIR = $(DOCBOOK5_BASE_DIR)/rendered
+DOCBOOK5_BASE_DIR := lib/docbook/5
+DOCBOOK5_ALL_IN_ONE_XHTML_DIR := $(DOCBOOK5_BASE_DIR)/essays
+DOCBOOK5_SOURCES_DIR := $(DOCBOOK5_BASE_DIR)/xml
+DOCBOOK5_FOR_OOO_XHTML_DIR := $(DOCBOOK5_BASE_DIR)/for-ooo-xhtml
+DOCBOOK5_RENDERED_DIR := $(DOCBOOK5_BASE_DIR)/rendered
 
 DOCBOOK5_XSL_STYLESHEETS_PATH := /usr/share/sgml/docbook/xsl-ns-stylesheets
 
@@ -23,13 +23,14 @@ DOCBOOK5_XSL_STYLESHEETS_FO_PATH := $(DOCBOOK5_XSL_STYLESHEETS_PATH)/fo
 DOCBOOK5_XSL_CUSTOM_XSLT_STYLESHEET := lib/sgml/shlomif-docbook/xsl-5-stylesheets/shlomif-essays-5-xhtml.xsl
 DOCBOOK5_XSL_ONECHUNK_XSLT_STYLESHEET := lib/sgml/shlomif-docbook/xsl-5-stylesheets/shlomif-essays-5-xhtml-onechunk.xsl
 DOCBOOK5_XSL_FO_XSLT_STYLESHEET := lib/sgml/shlomif-docbook/xsl-5-stylesheets/shlomif-essays-5-fo.xsl
+
 include lib/make/docbook/sf-homepage-docbooks-generated.mak
 
 DOCBOOK4_INSTALLED_CSS_DIRS = $(DOCBOOK4_DIRS_LIST:%=$(T2_POST_DEST)/%/docbook-css)
 
-DOCBOOK4_BASE_DIR = lib/docbook/4
-DOCBOOK4_RENDERED_DIR = $(DOCBOOK4_BASE_DIR)/rendered
-DOCBOOK4_ALL_IN_ONE_XHTML_DIR = $(DOCBOOK4_BASE_DIR)/essays
+DOCBOOK4_BASE_DIR := lib/docbook/4
+DOCBOOK4_RENDERED_DIR := $(DOCBOOK4_BASE_DIR)/rendered
+DOCBOOK4_ALL_IN_ONE_XHTML_DIR := $(DOCBOOK4_BASE_DIR)/essays
 
 docbook4_targets = $(patsubst %,$(1)/%$(2),$(DOCBOOK4_DOCS))
 DOCBOOK4_TARGETS = $(call docbook4_targets,$(DOCBOOK4_RENDERED_DIR),.html)
@@ -45,15 +46,10 @@ DOCBOOK4_ALL_IN_ONE_XHTMLS_CSS = $(patsubst %/all-in-one.html,%/style.css,$(filt
 
 DOCBOOK5_TARGETS = $(patsubst %,$(DOCBOOK5_RENDERED_DIR)/%.xhtml,$(DOCBOOK5_DOCS))
 DOCBOOK5_XMLS = $(patsubst %,$(DOCBOOK5_XML_DIR)/%.xml,$(DOCBOOK5_DOCS))
-
 DOCBOOK5_EPUBS = $(patsubst %,$(DOCBOOK5_EPUB_DIR)/%.epub,$(filter-out hebrew-html-tutorial ,$(DOCBOOK5_DOCS)))
-
 DOCBOOK5_FOS = $(patsubst %,$(DOCBOOK5_FO_DIR)/%.fo,$(DOCBOOK5_DOCS))
-
 DOCBOOK5_FOR_OOO_XHTMLS = $(patsubst %,$(DOCBOOK5_FOR_OOO_XHTML_DIR)/%.html,$(DOCBOOK5_DOCS))
-
 DOCBOOK5_PDFS = $(patsubst %,$(DOCBOOK5_PDF_DIR)/%.pdf,$(DOCBOOK5_DOCS))
-
 DOCBOOK5_RTFS = $(patsubst %,$(DOCBOOK5_RTF_DIR)/%.rtf,$(DOCBOOK5_DOCS))
 
 DOCBOOK5_INDIVIDUAL_XHTMLS = $(addprefix $(DOCBOOK5_INDIVIDUAL_XHTML_DIR)/,$(DOCBOOK5_DOCS))
