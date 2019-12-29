@@ -12,21 +12,21 @@
 [% SET db_macro_prefix = "DOCBOOK" _ db_ver %]
 [% SET hash_of_dirs = {} %]
 
-[% db_macro_prefix %]_BUILD_DIR_BASE = lib/docbook/[% db_ver_path %]
+[% db_macro_prefix %]_BUILD_DIR_BASE := lib/docbook/[% db_ver_path %]
 
-[% db_macro_prefix %]_DIRS_LIST =[% FOREACH d = docs %] [% d.path %][% END %]
+[% db_macro_prefix %]_DIRS_LIST :=[% FOREACH d = docs %] [% d.path %][% END %]
 
 [% db_macro_prefix %]_DOCS +=[% FOREACH d = docs %] [% d.base %][% END %]
 
 [% FOREACH fmt = fmts %]
 [% BLOCK fmt_dest_dir %][% IF fmt.var == 'INDIVIDUAL_XHTML' %][% DEST %][% ELSE %][% POST_DEST %][% END %][% END %]
-    [% db_macro_prefix %]_INSTALLED_[% fmt.var %]S =[% FOREACH d = docs %][% UNLESS fmt.var == 'EPUB' and d.no_epub %] [% INCLUDE fmt_dest_dir %]/[% d.path %]/[% d.dest_base || d.base %][% fmt.installed_ext ? (fmt.installed_ext _ html_ext) : fmt.ext %][% END %][% END %]
+[% db_macro_prefix %]_INSTALLED_[% fmt.var %]S :=[% FOREACH d = docs %][% UNLESS fmt.var == 'EPUB' and d.no_epub %] [% INCLUDE fmt_dest_dir %]/[% d.path %]/[% d.dest_base || d.base %][% fmt.installed_ext ? (fmt.installed_ext _ html_ext) : fmt.ext %][% END %][% END %]
 
 [% IF db_ver == '5' %]
-[% db_macro_prefix %]_INSTALLED_HTMLS =[% FOREACH d = docs %] [% INCLUDE fmt_dest_dir %]/[% d.path %]/[% d.base %].raw.html[% END %]
+[% db_macro_prefix %]_INSTALLED_HTMLS :=[% FOREACH d = docs %] [% INCLUDE fmt_dest_dir %]/[% d.path %]/[% d.base %].raw.html[% END %]
 [% END %]
 
-[% db_macro_prefix %]_[% fmt.var %]_DIR = $([% db_macro_prefix %]_BUILD_DIR_BASE)[% fmt.dir %]
+[% db_macro_prefix %]_[% fmt.var %]_DIR := $([% db_macro_prefix %]_BUILD_DIR_BASE)[% fmt.dir %]
 
 [% END %]
 
@@ -80,7 +80,7 @@
 [% END %]
 
 [%- SET str = hash_of_dirs.keys.sort.join(" ") -%]
-[% db_macro_prefix %]_INDIVIDUAL_XHTML__POST_DEST__DIRS =[% IF str != "" %][% " " _ str %][% END %]
+[% db_macro_prefix %]_INDIVIDUAL_XHTML__POST_DEST__DIRS :=[% IF str != "" %][% " " _ str %][% END %]
 
 [% END # db_ver loop.
 %]

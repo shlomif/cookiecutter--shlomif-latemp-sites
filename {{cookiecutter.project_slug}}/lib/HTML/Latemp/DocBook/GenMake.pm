@@ -21,6 +21,7 @@ sub generate
     my $tt        = Template->new( {} );
     my $documents = HTML::Latemp::DocBook::DocsList->new->docs_list;
 
+    my $output = '';
     $tt->process(
         "lib/make/docbook/sf-homepage-docbook-gen.tt",
         {
@@ -34,14 +35,12 @@ sub generate
 ### This file is auto-generated from gen-dobook-make-helpers.pl
 EOF
         },
-        $gen_make_fn,
+        ( \$output ),
     ) or die $tt->error();
 
-    path($gen_make_fn)->edit_utf8(
-        sub {
-            s/\n\n+/\n\n/g;
-        }
-    );
+    $output =~ s/\n{3,}/\n\n/g;
+
+    path($gen_make_fn)->spew_utf8($output);
 
     return;
 }
