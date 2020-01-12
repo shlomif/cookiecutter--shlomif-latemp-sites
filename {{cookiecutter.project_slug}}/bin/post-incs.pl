@@ -91,7 +91,7 @@ s#\s*(</?(?:body|(?:br /)|div|head|li|ol|p|title|ul)>)\s*#$1#gms;
 }
 system(
     'bin/batch-inplace-html-minifier',
-    '-c', 'bin/html-min-cli-config-file.conf',
+    '-c',                   'bin/html-min-cli-config-file.conf',
     '--keep-closing-slash', @filenames
 ) and die "html-min $!";
 
