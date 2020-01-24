@@ -6,8 +6,7 @@
 # Distributed under terms of the MIT license.
 #
 
-unalias l
-l()
+runspell()
 {
     make
     bin/spell-checker-iface > foo.txt
