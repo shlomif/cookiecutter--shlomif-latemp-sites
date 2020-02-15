@@ -32,7 +32,7 @@
 var camelCase = require('camel-case');
 var fs = require('fs');
 var minify = require('html-minifier/src/htmlminifier.js').minify;
-var paramCase = require('param-case');
+import { paramCase } from 'param-case';
 var path = require('path');
 var program = require('commander');
 
