@@ -30,7 +30,7 @@
 'use strict';
 
 const paramCase = require('param-case').paramCase;
-var camelCase = require('camel-case');
+const camelCase = require('camel-case').camelCase;
 var fs = require('fs');
 var minify = require('html-minifier/src/htmlminifier.js').minify;
 var path = require('path');
