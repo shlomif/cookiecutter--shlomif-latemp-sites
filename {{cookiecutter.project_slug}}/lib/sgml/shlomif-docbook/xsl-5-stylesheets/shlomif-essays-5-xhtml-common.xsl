@@ -156,8 +156,8 @@
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
-<xsl:template match="d:programlisting[@d:language]" mode='class.value'>
-    <xsl:value-of select='concat("programlisting ", @d:language)' />
+<xsl:template match="d:programlisting[@language]" mode='class.value'>
+    <xsl:value-of select='concat("programlisting ", @language)' />
 </xsl:template>
 <xsl:template name="is.graphic.extension">
   <xsl:param name="ext"/>
