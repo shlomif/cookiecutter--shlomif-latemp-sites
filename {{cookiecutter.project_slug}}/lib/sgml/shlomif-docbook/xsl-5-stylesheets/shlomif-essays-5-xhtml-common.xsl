@@ -156,6 +156,9 @@
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
+<xsl:template match="programlisting[@language]" mode='class.value'>
+    <xsl:value-of select='concat("programlisting ", @language)' />
+</xsl:template>
 <xsl:template name="is.graphic.extension">
   <xsl:param name="ext"/>
   <xsl:variable name="lcext" select="translate($ext,                                        'ABCDEFGHIJKLMNOPQRSTUVWXYZ',                                        'abcdefghijklmnopqrstuvwxyz')"/>
