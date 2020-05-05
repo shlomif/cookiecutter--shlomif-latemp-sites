@@ -6,9 +6,20 @@
 # Distributed under terms of the MIT license.
 #
 
+spelling_errors_filename_1='foo.txt'
+spelling_errors_filename_2='y.txt'
+
 runspell()
 {
-    make
-    bin/spell-checker-iface > foo.txt
-    perl bin/extract-spelling-errors.pl > y.txt
+    (
+        set -e -x
+        gmake
+        bin/spell-checker-iface > "$spelling_errors_filename_1"
+        perl bin/extract-spelling-spelling_errors_filename_.pl > "$spelling_errors_filename_2"
+    )
+}
+
+editspell()
+{
+    nvim-qt -- -o lib/hunspell/whitelist1.txt "$spelling_errors_filename_1" "$spelling_errors_filename_2"
 }
