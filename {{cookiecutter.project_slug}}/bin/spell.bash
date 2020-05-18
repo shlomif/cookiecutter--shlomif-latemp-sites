@@ -15,7 +15,7 @@ runspell()
         set -e -x
         gmake
         bin/spell-checker-iface > "$spelling_errors_filename_1"
-        perl bin/extract-spelling-spelling_errors_filename_.pl > "$spelling_errors_filename_2"
+        perl bin/extract-spelling-errors.pl > "$spelling_errors_filename_2"
     )
 }
 
