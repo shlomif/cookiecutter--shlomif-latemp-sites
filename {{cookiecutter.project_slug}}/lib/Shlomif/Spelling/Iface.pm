@@ -3,10 +3,10 @@ package Shlomif::Spelling::Iface;
 use strict;
 use warnings;
 
-use MooX (qw( late ));
+use Moo;
 
-use Shlomif::Spelling::Check;
-use Shlomif::Spelling::FindFiles;
+use Shlomif::Spelling::Check     ();
+use Shlomif::Spelling::FindFiles ();
 
 has obj =>
     ( is => 'ro', default => sub { return Shlomif::Spelling::Check->new(); } );

@@ -5,11 +5,11 @@ use warnings;
 use autodie;
 use utf8;
 
-use MooX qw/late/;
+use Moo;
 
-use Text::Hunspell;
-use Shlomif::Spelling::Whitelist;
-use HTML::Spelling::Site::Checker;
+use Text::Hunspell                ();
+use Shlomif::Spelling::Whitelist  ();
+use HTML::Spelling::Site::Checker ();
 
 has obj => (
     is      => 'ro',
