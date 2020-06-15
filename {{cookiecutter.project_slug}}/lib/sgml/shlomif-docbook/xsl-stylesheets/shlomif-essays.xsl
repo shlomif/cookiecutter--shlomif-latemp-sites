@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" version='1.0'>
+    <xsl:param name="docmake.output.work_in_progress"></xsl:param>
     <xsl:param name="use.id.as.filename">1</xsl:param>
     <xsl:param name="html.stylesheet">style.css</xsl:param>
     <xsl:param name="itemizedlist.propagates.style">1</xsl:param>
