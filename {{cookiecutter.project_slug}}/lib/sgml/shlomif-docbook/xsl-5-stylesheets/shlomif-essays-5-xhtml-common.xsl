@@ -7,6 +7,7 @@
     version='1.0'
     >
     <xsl:import href="http://docbook.sourceforge.net/release/xsl-ns/current/xhtml5/html5-element-mods.xsl"/>
+    <xsl:import href="shlomif-essays-5.xsl" />
 
     <xsl:param name="css.decoration" select="0"></xsl:param>
     <xsl:param name="generate.id.attributes" select="0"></xsl:param>
