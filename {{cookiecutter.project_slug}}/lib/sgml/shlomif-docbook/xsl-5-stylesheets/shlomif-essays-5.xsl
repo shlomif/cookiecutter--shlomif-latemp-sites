@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" version="1.0">
+    <xsl:param name="chunk.quietly" select="1"/>
     <xsl:param name="use.id.as.filename">1</xsl:param>
     <xsl:param name="html.stylesheet">style.css</xsl:param>
     <xsl:param name="itemizedlist.propagates.style">1</xsl:param>
