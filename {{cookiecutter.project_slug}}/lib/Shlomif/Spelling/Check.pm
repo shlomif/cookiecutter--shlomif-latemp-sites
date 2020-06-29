@@ -27,8 +27,10 @@ has obj => (
 
         return HTML::Spelling::Site::Checker->new(
             {
-                timestamp_cache_fn =>
-                    './Tests/data/cache/spelling-timestamp.json',
+                timestamp_cache_fn => (
+                    ( $ENV{LATEMP_SPELL_CACHE_DIR} // './Tests/data/cache' )
+                    . '/spelling-timestamp.json'
+                ),
                 whitelist_parser =>
                     scalar( Shlomif::Spelling::Whitelist->new() ),
                 check_word_cb => sub {
