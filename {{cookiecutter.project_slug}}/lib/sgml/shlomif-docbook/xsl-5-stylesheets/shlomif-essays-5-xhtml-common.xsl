@@ -6,7 +6,10 @@
     xmlns:d="http://docbook.org/ns/docbook"
     version='1.0'
     >
+    <!--
+    Remming out to avoid text on stdout:
     <xsl:import href="http://docbook.sourceforge.net/release/xsl-ns/current/xhtml5/html5-element-mods.xsl"/>
+    -->
     <xsl:import href="shlomif-essays-5.xsl" />
 
     <xsl:param name="css.decoration" select="0"></xsl:param>
