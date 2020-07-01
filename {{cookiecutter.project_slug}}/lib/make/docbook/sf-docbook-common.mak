@@ -96,7 +96,6 @@ DBTOEPUB = ruby $(EPUB_SCRIPT)
 
 $(DOCBOOK5_EPUBS): $(DOCBOOK5_EPUB_DIR)/%.epub: $(DOCBOOK5_XML_DIR)/%.xml
 	$(DBTOEPUB) -s $(EPUB_XSLT) -o $@ $<
-	strip-nondeterminism --type zip $@
 
 $(DOCBOOK5_PDF_DIR)/%.pdf: $(DOCBOOK5_FO_DIR)/%.fo
 	fop -fo $< -pdf $@
