@@ -1,4 +1,8 @@
-[% FOREACH db_ver = [4,5] %]
+[% UNLESS docbook_versions %]
+[% SET docbook_versions = [4, 5] %]
+[% END %]
+
+[% FOREACH db_ver = docbook_versions %]
 [% IF db_ver == '5' %]
 [% xslt_ss = '$(DOCBOOK5_XSL_CUSTOM_XSLT_STYLESHEET)' %]
 [% html_ext = '.xhtml' %]
