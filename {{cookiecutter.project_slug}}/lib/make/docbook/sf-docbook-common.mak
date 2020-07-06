@@ -56,7 +56,7 @@ docbook_targets: docbook5_targets \
 	install_docbook5_epubs \
 	install_docbook5_htmls \
 	install_docbook_individual_xhtmls \
-	install_docbook_css_dirs install_docbook5_xmls \
+	install_docbook5_xmls
 
 $(DOCBOOK5_RTF_DIR)/%.rtf: $(DOCBOOK5_FO_DIR)/%.fo
 	fop -fo $< -rtf $@
