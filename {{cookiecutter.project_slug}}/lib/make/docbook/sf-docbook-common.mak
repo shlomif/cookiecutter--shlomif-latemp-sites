@@ -26,7 +26,7 @@ DOCBOOK5_XSL_FO_XSLT_STYLESHEET := lib/sgml/shlomif-docbook/xsl-5-stylesheets/sh
 
 include lib/make/docbook/sf-homepage-docbooks-generated.mak
 
-DOCBOOK4_INSTALLED_CSS_DIRS = $(DOCBOOK4_DIRS_LIST:%=$(T2_POST_DEST)/%/docbook-css)
+DOCBOOK4_INSTALLED_CSS_DIRS = $(DOCBOOK4_DIRS_LIST:%=$(SRC_POST_DEST)/%/docbook-css)
 
 DOCBOOK4_BASE_DIR := lib/docbook/4
 DOCBOOK4_RENDERED_DIR := $(DOCBOOK4_BASE_DIR)/rendered
