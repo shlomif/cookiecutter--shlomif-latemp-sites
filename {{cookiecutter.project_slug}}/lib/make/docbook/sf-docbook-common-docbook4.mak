@@ -29,7 +29,7 @@ install_docbook_css_dirs: make-dirs $(DOCBOOK4_INSTALLED_CSS_DIRS)
 docbook_extended: $(DOCBOOK4_FOS) $(DOCBOOK4_PDFS) \
 	install_docbook4_pdfs install_docbook4_rtfs
 
-docbook_targets: docbook4_targets install_docbook4_xmls install_docbook_css_dirs 
+docbook_targets: docbook4_targets install_docbook4_xmls install_docbook_css_dirs
 
 $(DOCBOOK4_RENDERED_DIR)/%.html: $(DOCBOOK4_ALL_IN_ONE_XHTML_DIR)/%/all-in-one.html
 	./bin/clean-up-docbook-xsl-xhtml.pl -o $@ $<
