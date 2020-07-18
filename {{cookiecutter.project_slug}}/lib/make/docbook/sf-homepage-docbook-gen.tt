@@ -42,8 +42,13 @@
 [% SET my_ext = my_ext_record.l %]
 [% SET my_ext_uc = my_ext_record.u %]
 
+[% IF my_ext = 'epub' %]
+[% POST_DEST %]/[% d.path %]/[% d.dest_base || d.base %].[% my_ext %]: $([% db_macro_prefix %]_XML_DIR)/[% d.base %].xml
+[% "\t" %]$(call dbtoepub_func)
+[% ELSE %]
 [% POST_DEST %]/[% d.path %]/[% d.dest_base || d.base %].[% my_ext %]: $([% db_macro_prefix %]_[% my_ext_uc %]_DIR)/[% d.base %].[% my_ext %]
 [% "\t" %]$(call COPY)
+[% END %]
 
 [% END %]
 
