@@ -56,8 +56,10 @@ docbook_targets: docbook5_targets \
 	install_docbook_individual_xhtmls \
 	install_docbook5_xmls
 
+dbtortf_func = fop -fo $< -rtf $@
+
 $(DOCBOOK5_RTF_DIR)/%.rtf: $(DOCBOOK5_FO_DIR)/%.fo
-	fop -fo $< -rtf $@
+	$(call dbtortf_func)
 
 EPUB_SCRIPT = $(DOCBOOK5_XSL_STYLESHEETS_PATH)/epub/bin/dbtoepub
 EPUB_XSLT = lib/sgml/shlomif-docbook/docbook-epub-preproc.xslt
@@ -67,8 +69,10 @@ dbtoepub_func = $(DBTOEPUB) -s $(EPUB_XSLT) -o $@ $<
 $(DOCBOOK5_EPUBS): $(DOCBOOK5_EPUB_DIR)/%.epub: $(DOCBOOK5_XML_DIR)/%.xml
 	$(call dbtoepub_func)
 
+dbtopdf_func = fop -fo $< -pdf $@
+
 $(DOCBOOK5_PDF_DIR)/%.pdf: $(DOCBOOK5_FO_DIR)/%.fo
-	fop -fo $< -pdf $@
+	$(call dbtopdf_func)
 
 $(DOCBOOK5_ALL_IN_ONE_XHTMLS): $(DOCBOOK5_ALL_IN_ONE_XHTML_DIR)/%/all-in-one.xhtml: $(DOCBOOK5_SOURCES_DIR)/%.xml
 	$(DOCMAKE) --stringparam "docbook.css.source=" --stringparam "root.filename=$(patsubst %.xhtml,%,$@)" --basepath $(DOCBOOK5_XSL_STYLESHEETS_PATH) -x $(DOCBOOK5_XSL_ONECHUNK_XSLT_STYLESHEET) xhtml5 $<

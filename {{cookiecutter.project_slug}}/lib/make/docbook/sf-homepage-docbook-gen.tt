@@ -37,14 +37,14 @@
 # The individual docs.
 [% FOREACH d = docs %]
 
-[% FOREACH my_ext_record = [{l => 'epub', u => 'EPUB'}, {l=> 'pdf',u => 'PDF'},{l => 'xml', u => 'XML'},{l => 'rtf', u => 'RTF',}] %]
+[% FOREACH my_ext_record = [{l => 'epub', u => 'EPUB', f => 'dbtoepub_func', src => 'xml'}, {l=> 'pdf',u => 'PDF', f => 'dbtopdf_func', src=>'fo', },{l => 'xml', u => 'XML'},{l => 'rtf', u => 'RTF', f => 'dbtortf_func', src=>'fo',}] %]
 
 [% SET my_ext = my_ext_record.l %]
 [% SET my_ext_uc = my_ext_record.u %]
 
-[% IF (my_ext == 'epub') %]
-[% POST_DEST %]/[% d.path %]/[% d.dest_base || d.base %].[% my_ext %]: $([% db_macro_prefix %]_XML_DIR)/[% d.base %].xml
-[% "\t" %]$(call dbtoepub_func)
+[% IF my_ext_record.f OR %]
+[% POST_DEST %]/[% d.path %]/[% d.dest_base || d.base %].[% my_ext %]: $([% db_macro_prefix %]_[% my_ext_record.src.upper %]_DIR)/[% d.base %].[% my_ext_record.src %]
+[% "\t" %]$(call [% my_ext_record.f %])
 [% ELSE %]
 [% POST_DEST %]/[% d.path %]/[% d.dest_base || d.base %].[% my_ext %]: $([% db_macro_prefix %]_[% my_ext_uc %]_DIR)/[% d.base %].[% my_ext %]
 [% "\t" %]$(call COPY)
