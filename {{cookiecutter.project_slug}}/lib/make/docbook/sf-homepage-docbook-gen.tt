@@ -42,7 +42,7 @@
 [% SET my_ext = my_ext_record.l %]
 [% SET my_ext_uc = my_ext_record.u %]
 
-[% IF my_ext_record.f OR %]
+[% IF my_ext_record.f %]
 [% POST_DEST %]/[% d.path %]/[% d.dest_base || d.base %].[% my_ext %]: $([% db_macro_prefix %]_[% my_ext_record.src.upper %]_DIR)/[% d.base %].[% my_ext_record.src %]
 [% "\t" %]$(call [% my_ext_record.f %])
 [% ELSE %]
