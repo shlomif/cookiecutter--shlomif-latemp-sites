@@ -48,7 +48,7 @@ install_docbook5_rtfs: make-dirs  $(DOCBOOK5_INSTALLED_RTFS)
 
 install_docbook_individual_xhtmls: make-dirs $(DOCBOOK5_INSTALLED_INDIVIDUAL_XHTMLS) $(DOCBOOK5_INSTALLED_INDIVIDUAL_XHTMLS_CSS)
 
-docbook_extended: $(DOCBOOK5_FOS) $(DOCBOOK5_PDFS) install_docbook5_pdfs install_docbook5_rtfs
+docbook_extended: install_docbook5_pdfs install_docbook5_rtfs
 
 docbook_targets: docbook5_targets \
 	install_docbook5_epubs \
