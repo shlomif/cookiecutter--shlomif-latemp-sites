@@ -267,4 +267,9 @@
       <xsl:apply-templates select="*" mode="opf.spine"/>
     </xsl:if>
   </xsl:template>
+  <!-- reproduciblde builds -->
+  <xsl:template name="head.content.generator">
+    <xsl:param name="node" select="."/>
+    <meta name="generator" content="DocBook XSL Shlomif"/>
+  </xsl:template>
 </xsl:stylesheet>
