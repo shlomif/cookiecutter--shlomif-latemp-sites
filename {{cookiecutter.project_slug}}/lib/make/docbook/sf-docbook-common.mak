@@ -37,16 +37,16 @@ DOCBOOK5_INDIVIDUAL_XHTMLS = $(addprefix $(DOCBOOK5_INDIVIDUAL_XHTML_DIR)/,$(DOC
 DOCBOOK5_ALL_IN_ONE_XHTMLS__DIRS = $(patsubst %,$(DOCBOOK5_ALL_IN_ONE_XHTML_DIR)/%,$(DOCBOOK5_DOCS))
 DOCBOOK5_ALL_IN_ONE_XHTMLS = $(patsubst %,$(DOCBOOK5_ALL_IN_ONE_XHTML_DIR)/%/all-in-one.xhtml,$(DOCBOOK5_DOCS))
 
-install_docbook5_epubs: make-dirs $(DOCBOOK5_INSTALLED_EPUBS)
-install_docbook5_htmls: make-dirs $(DOCBOOK5_INSTALLED_HTMLS)
+install_docbook5_epubs: $(DOCBOOK5_INSTALLED_EPUBS)
+install_docbook5_htmls: $(DOCBOOK5_INSTALLED_HTMLS)
 
-install_docbook5_pdfs: make-dirs $(DOCBOOK5_INSTALLED_PDFS)
+install_docbook5_pdfs: $(DOCBOOK5_INSTALLED_PDFS)
 
-install_docbook5_xmls: make-dirs $(DOCBOOK5_INSTALLED_XMLS)
+install_docbook5_xmls: $(DOCBOOK5_INSTALLED_XMLS)
 
-install_docbook5_rtfs: make-dirs  $(DOCBOOK5_INSTALLED_RTFS)
+install_docbook5_rtfs: $(DOCBOOK5_INSTALLED_RTFS)
 
-install_docbook_individual_xhtmls: make-dirs $(DOCBOOK5_INSTALLED_INDIVIDUAL_XHTMLS)
+install_docbook_individual_xhtmls: $(DOCBOOK5_INSTALLED_INDIVIDUAL_XHTMLS)
 
 docbook_extended: install_docbook5_pdfs install_docbook5_rtfs
 

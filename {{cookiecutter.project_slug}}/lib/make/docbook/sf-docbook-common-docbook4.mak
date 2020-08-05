@@ -16,15 +16,15 @@ DOCBOOK4_ALL_IN_ONE_XHTMLS = $(call docbook4_targets,$(DOCBOOK4_ALL_IN_ONE_XHTML
 # We have our own style for human-hacking-field-guide so we get rid of it.
 DOCBOOK4_ALL_IN_ONE_XHTMLS_CSS = $(patsubst %/all-in-one.html,%/style.css,$(filter-out human-hacking-%,$(DOCBOOK4_ALL_IN_ONE_XHTMLS)))
 
-install_docbook4_pdfs: make-dirs $(DOCBOOK4_INSTALLED_PDFS)
+install_docbook4_pdfs: $(DOCBOOK4_INSTALLED_PDFS)
 
-install_docbook4_xmls: make-dirs $(DOCBOOK4_INSTALLED_XMLS)
+install_docbook4_xmls: $(DOCBOOK4_INSTALLED_XMLS)
 
-install_docbook4_rtfs: make-dirs  $(DOCBOOK4_INSTALLED_RTFS)
+install_docbook4_rtfs: $(DOCBOOK4_INSTALLED_RTFS)
 
-install_docbook_individual_xhtmls: make-dirs $(DOCBOOK4_INSTALLED_INDIVIDUAL_XHTMLS) $(DOCBOOK4_INSTALLED_INDIVIDUAL_XHTMLS_CSS)
+install_docbook_individual_xhtmls: $(DOCBOOK4_INSTALLED_INDIVIDUAL_XHTMLS) $(DOCBOOK4_INSTALLED_INDIVIDUAL_XHTMLS_CSS)
 
-install_docbook_css_dirs: make-dirs $(DOCBOOK4_INSTALLED_CSS_DIRS)
+install_docbook_css_dirs: $(DOCBOOK4_INSTALLED_CSS_DIRS)
 
 docbook_extended: $(DOCBOOK4_FOS) $(DOCBOOK4_PDFS) \
 	install_docbook4_pdfs install_docbook4_rtfs
