@@ -36,7 +36,7 @@ sub generate
                 : ( docs_4 => [ grep { $_->{db_ver} != 5 } @$documents ], )
             ),
             docs_5 => [ grep { $_->{db_ver} == 5 } @$documents ],
-            fmts =>
+            fmts   =>
                 scalar( HTML::Latemp::DocBook::EndFormats->new->get_formats ),
             top_header => <<"EOF",
 ### This file is auto-generated from gen-dobook-make-helpers.pl
