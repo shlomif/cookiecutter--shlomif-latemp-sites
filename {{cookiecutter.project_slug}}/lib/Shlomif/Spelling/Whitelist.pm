@@ -4,10 +4,13 @@ use strict;
 use warnings;
 
 use MooX qw/late/;
+use Path::Tiny qw/ path /;
 
 extends('HTML::Spelling::Site::Whitelist');
 
-has '+filename' => ( default => 'lib/hunspell/whitelist1.txt' );
+has '+filename' => ( default =>
+        path(__FILE__)->parent(3)->child( 'hunspell', 'whitelist1.txt', )
+        ->stringify() );
 
 sub check_word
 {
