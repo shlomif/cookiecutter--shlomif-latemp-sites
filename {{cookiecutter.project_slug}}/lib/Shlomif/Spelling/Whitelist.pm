@@ -8,9 +8,8 @@ use Path::Tiny qw/ path /;
 
 extends('HTML::Spelling::Site::Whitelist');
 
-has '+filename' => ( default =>
-        path(__FILE__)->parent(3)->child( 'hunspell', 'whitelist1.txt', )
-        ->stringify() );
+has '+filename' => ( default => path(__FILE__)->absolute()->parent(3)
+        ->child( 'hunspell', 'whitelist1.txt', )->stringify() );
 
 sub check_word
 {
