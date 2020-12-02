@@ -9,8 +9,8 @@ use Path::Tiny qw/ path /;
 extends('HTML::Spelling::Site::Whitelist');
 
 has '+filename' =>
-    ( default => path( $ENV{LATEMP_ROOT_SOURCE_DIR} // "./lib" )->absolute()
-        ->child( 'hunspell', 'whitelist1.txt', )->stringify() );
+    ( default => path( $ENV{LATEMP_ROOT_SOURCE_DIR} // "./" )->absolute()
+        ->child( 'lib', 'hunspell', 'whitelist1.txt', )->stringify() );
 
 sub check_word
 {
