@@ -13,7 +13,7 @@ DOCBOOK5_ALL_IN_ONE_XHTML_DIR := $(DOCBOOK5_BASE_DIR)/essays
 DOCBOOK5_SOURCES_DIR := $(DOCBOOK5_BASE_DIR)/xml
 DOCBOOK5_RENDERED_DIR := $(DOCBOOK5_BASE_DIR)/rendered
 
-DOCBOOK5_XSL_STYLESHEETS_PATH := /usr/share/sgml/docbook/xsl-ns-stylesheets
+DOCBOOK5_XSL_STYLESHEETS_PATH ?= /usr/share/sgml/docbook/xsl-ns-stylesheets
 
 DOCBOOK5_XSL_STYLESHEETS_XHTML_PATH := $(DOCBOOK5_XSL_STYLESHEETS_PATH)/xhtml-1_1
 DOCBOOK5_XSL_STYLESHEETS_ONECHUNK_PATH := $(DOCBOOK5_XSL_STYLESHEETS_PATH)/onechunk
@@ -63,7 +63,7 @@ $(DOCBOOK5_RTF_DIR)/%.rtf: $(DOCBOOK5_FO_DIR)/%.fo
 
 EPUB_SCRIPT = $(DOCBOOK5_XSL_STYLESHEETS_PATH)/epub/bin/dbtoepub
 EPUB_XSLT = lib/sgml/shlomif-docbook/docbook-epub-preproc.xslt
-DBTOEPUB = ruby $(EPUB_SCRIPT)
+DBTOEPUB ?= ruby $(EPUB_SCRIPT)
 dbtoepub_func = $(DBTOEPUB) -s $(EPUB_XSLT) -o $@ $<
 
 $(DOCBOOK5_EPUBS): $(DOCBOOK5_EPUB_DIR)/%.epub: $(DOCBOOK5_XML_DIR)/%.xml
