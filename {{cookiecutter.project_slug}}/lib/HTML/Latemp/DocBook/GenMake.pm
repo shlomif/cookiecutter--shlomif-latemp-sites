@@ -22,21 +22,15 @@ sub generate
     my $tt        = Template->new( {} );
     my $documents = HTML::Latemp::DocBook::DocsList->new->docs_list;
 
-    my $disable_docbook4 = $self->disable_docbook4;
-    my $output           = '';
+    my $output = '';
     $tt->process(
         "lib/make/docbook/sf-homepage-docbook-gen.tt",
         {
-            ( $disable_docbook4 ? ( docbook_versions => [ 5, ] ) : () ),
-            DEST      => $self->dest_var,
-            POST_DEST => $self->post_dest_var,
-            (
-                $disable_docbook4
-                ? ()
-                : ( docs_4 => [ grep { $_->{db_ver} != 5 } @$documents ], )
-            ),
-            docs_5 => [ grep { $_->{db_ver} == 5 } @$documents ],
-            fmts   =>
+            docbook_versions => [ 5, ],
+            DEST             => $self->dest_var,
+            POST_DEST        => $self->post_dest_var,
+            docs_5           => [@$documents],
+            fmts             =>
                 scalar( HTML::Latemp::DocBook::EndFormats->new->get_formats ),
             top_header => <<"EOF",
 ### This file is auto-generated from gen-dobook-make-helpers.pl

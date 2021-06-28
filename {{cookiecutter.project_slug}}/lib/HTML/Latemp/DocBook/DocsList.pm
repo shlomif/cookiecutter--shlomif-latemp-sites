@@ -6,18 +6,13 @@ use autodie;
 
 use Moo;
 
-use List::MoreUtils qw(any);
 use YAML::XS ();
 
 my @documents = @{ YAML::XS::LoadFile("./lib/docbook/docs.yaml") };
 
 foreach my $d (@documents)
 {
-    if ( !exists( $d->{db_ver} ) )
-    {
-        $d->{db_ver} = 4;
-    }
-    elsif ( !( any { $d->{db_ver} eq $_ } ( 4, 5 ) ) )
+    if ( $d->{db_ver} ne 5 )
     {
         die "Illegal db_ver $d->{db_ver}!";
     }

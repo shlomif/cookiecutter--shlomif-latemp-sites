@@ -8,15 +8,8 @@ use Moo;
 sub _process_simple_end_format
 {
     my $fmt = shift;
-
-    my %f = %$fmt;
-
-    if ( !exists( $f{dir} ) )
-    {
-        $f{dir} = lc( $f{var} );
-    }
-
-    return \%f;
+    $fmt->{dir} //= lc( $fmt->{var} );
+    return $fmt;
 }
 
 my @end_formats = (
