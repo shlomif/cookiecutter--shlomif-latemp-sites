@@ -9,8 +9,6 @@ required:
           url: "https://nodejs.org/en/"
         - exe: "npm"
           url: "https://nodejs.org/en/"
-        - exe: "sass"
-          url: "http://sass-lang.com/"
         - exe: "xsltproc"
           url: "http://xmlsoft.org/XSLT/"
     meta_data:
