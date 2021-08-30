@@ -18,6 +18,7 @@ required:
             url: 'http://www.shlomifish.org/'
             desc: 'This task package installs some of the packages that Shlomi Fish needs.'
     perl5_modules:
+        App::Docmake: '0.1003'
         App::Gezer: 0
         CGI: 0
         Carp: 0
