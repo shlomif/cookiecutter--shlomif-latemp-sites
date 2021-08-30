@@ -8,8 +8,10 @@ use Moo;
 use Shlomif::Spelling::Check     ();
 use Shlomif::Spelling::FindFiles ();
 
-has obj =>
-    ( is => 'ro', default => sub { return Shlomif::Spelling::Check->new(); } );
+has obj => (
+    is      => 'ro',
+    default => sub { return Shlomif::Spelling::Check->new(); }
+);
 
 has files => (
     is      => 'ro',
