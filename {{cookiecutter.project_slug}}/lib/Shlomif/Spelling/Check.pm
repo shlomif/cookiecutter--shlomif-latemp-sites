@@ -15,10 +15,27 @@ has obj => (
     is      => 'ro',
     default => sub {
         my ($self) = @_;
-        my $speller = Text::Hunspell->new(
-            '/usr/share/hunspell/en_GB.aff',
-            '/usr/share/hunspell/en_GB.dic',
-        );
+        my $speller;
+
+        use List::Util qw/all/;
+        my @basenames = (qw# en_GB.aff en_GB.dic #);
+    DIRS:
+        foreach my $dir ( "/usr/share/hunspell", "/usr/share/myspell" )
+        {
+            my $dn    = $dir;
+            my @check = ( map { "$dn/$_" } @basenames );
+            if ( all { -e } @check )
+            {
+                eval {
+                    $speller =
+                        Text::Hunspell->new( "$dir/en_GB.aff",
+                        "$dir/en_GB.dic", );
+                };
+                next DIRS if $@;
+                last DIRS
+                    if $speller;
+            }
+        }
 
         if ( not $speller )
         {
