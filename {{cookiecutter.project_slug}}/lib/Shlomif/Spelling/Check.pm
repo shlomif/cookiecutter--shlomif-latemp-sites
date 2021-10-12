@@ -18,19 +18,15 @@ has obj => (
         my $speller;
 
         use List::Util qw/all/;
-        my @basenames = (qw# en_GB.aff en_GB.dic #);
+        my $LANG      = "en_GB";
+        my @basenames = ( map { "$LANG.$_" } ( "aff", "dic", ) );
     DIRS:
         foreach my $dir ( "/usr/share/hunspell", "/usr/share/myspell" )
         {
-            my $dn    = $dir;
-            my @check = ( map { "$dn/$_" } @basenames );
+            my @check = ( map { "$dir/$_" } @basenames );
             if ( all { -e } @check )
             {
-                eval {
-                    $speller =
-                        Text::Hunspell->new( "$dir/en_GB.aff",
-                        "$dir/en_GB.dic", );
-                };
+                eval { $speller = Text::Hunspell->new(@check); };
                 next DIRS if $@;
                 last DIRS
                     if $speller;
