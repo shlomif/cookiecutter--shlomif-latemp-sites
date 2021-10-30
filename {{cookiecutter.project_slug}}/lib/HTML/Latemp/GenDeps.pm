@@ -45,10 +45,9 @@ sub run
         File::Find::Object::Rule->or( $discard, $rule->new() )
         ->name(qr/\.(wml|html|xhtml)\z/)->in('lib');
 
-    my %files_containing_headers = (
-        map { $_ => { re => qr{^\#include *"\Q$_\E"}ms, files => {}, }, }
-            @headers,
-    );
+    my %files_containing_headers =
+        ( map { $_ => { re => qr{^\#include *"\Q$_\E"}ms, files => {}, }, }
+            @headers, );
 
     foreach my $fn (@files)
     {
