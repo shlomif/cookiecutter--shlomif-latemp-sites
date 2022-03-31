@@ -62,7 +62,7 @@
 [%- SET foo_partial_path = d.path _ '/' _ ( d.dest_base || d.base) -%]
 [%- SET foo_dest = DEST _ '/' _ foo_partial_path -%]
 [%- SET individual_xhtmls_post_dest_dir = POST_DEST _ '/' _ foo_partial_path -%]
-[% IF foo_partial_path !~ /The-Enemy-English-v7/ %]
+[% IF (! (foo_partial_path.match('The-Enemy-English-v7')) ) %]
 [%- hash_of_dirs.$individual_xhtmls_post_dest_dir = "1" -%]
 [% END %]
 [%- SET individual_xhtml_pages_intermediate_dir = '$(' _ db_macro_prefix _ '_INDIVIDUAL_XHTML_DIR)/' _ d.base -%]
