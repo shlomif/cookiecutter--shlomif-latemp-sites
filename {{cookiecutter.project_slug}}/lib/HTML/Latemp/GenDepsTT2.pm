@@ -5,7 +5,7 @@ use warnings;
 use 5.014;
 
 use File::Find::Object::Rule ();
-use Path::Tiny qw/ path /;
+use Path::Tiny               qw/ path /;
 
 use Moo;
 

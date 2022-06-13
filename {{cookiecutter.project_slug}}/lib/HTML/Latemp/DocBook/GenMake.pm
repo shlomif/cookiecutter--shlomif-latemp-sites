@@ -5,7 +5,7 @@ use warnings;
 
 use Moo;
 
-use Path::Tiny qw/ path /;
+use Path::Tiny                        qw/ path /;
 use Template                          ();
 use HTML::Latemp::DocBook::DocsList   ();
 use HTML::Latemp::DocBook::EndFormats ();

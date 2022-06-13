@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use Moo;
-use Path::Tiny qw/ path /;
+use Path::Tiny   qw/ path /;
 use File::Update qw/ write_on_change /;
 
 sub run
