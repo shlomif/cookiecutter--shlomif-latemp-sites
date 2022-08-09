@@ -33,6 +33,8 @@ sub _map_tt2_to_deps
 sub run
 {
     my ( $self, $args ) = @_;
+    $args //= +{};
+
     my @files = File::Find::Object::Rule->name('*.tt2')->in( $self->src_dir );
 
     my $rule    = File::Find::Object::Rule->new;
@@ -83,7 +85,8 @@ m{^\[%\s+(?:INCLUDE\s*|PROCESS\s*|INSERT\s*|path_slurp\s*\(\s*)"([^"]+)"}gms
         }
     }
 
-    path("lib/make/deps.mak")->spew_utf8($deps_text);
+    my $out_fn = ( $args->{out_fn} // "lib/make/deps.mak" );
+    path($out_fn)->spew_utf8($deps_text);
 
     return;
 }
