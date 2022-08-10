@@ -13,7 +13,7 @@ use HTML::Latemp::DocBook::EndFormats ();
 has [ 'dest_var', 'post_dest_var' ] => ( is => 'ro', required => 1 );
 has [ 'disable_docbook4', ]         => ( is => 'ro', default  => '', );
 
-my $gen_make_fn = "lib/make/docbook/sf-homepage-docbooks-generated.mak";
+my $gen_make_fh = path("lib/make/generated/sf-homepage-docbooks-generated.mak");
 
 sub generate
 {
@@ -41,7 +41,7 @@ EOF
 
     $output =~ s/\n{3,}/\n\n/g;
 
-    path($gen_make_fn)->spew_utf8($output);
+    $gen_make_fh->touchpath()->spew_utf8($output);
 
     return;
 }
