@@ -39,7 +39,7 @@ EOF
         ( \$output ),
     ) or die $tt->error();
 
-    $output =~ s/\n{3,}/\n\n/g;
+    $output =~ s/\n{2,}/\n/g;
 
     $gen_make_fh->touchpath()->spew_utf8($output);
 
