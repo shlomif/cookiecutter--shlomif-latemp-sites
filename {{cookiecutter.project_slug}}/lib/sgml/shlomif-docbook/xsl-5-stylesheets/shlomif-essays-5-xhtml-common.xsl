@@ -163,6 +163,10 @@
 <xsl:template match="d:programlisting[@language]" mode='class.value'>
     <xsl:value-of select='concat("programlisting ", @language)' />
 </xsl:template>
+<xsl:template match="//d:mediaobject[./d:videoobject[./d:videodata[starts-with(text(), 'https://www.youtube.com/embed/')]]]">
+    <xsl:variable name='srcurl' select="./d:videoobject/d:videodata/text()" />
+    <iframe src="{$srcurl}" allowfullscreen="allowfullscreen"></iframe>
+</xsl:template>
 <xsl:template name="is.graphic.extension">
   <xsl:param name="ext"/>
   <xsl:variable name="lcext" select="translate($ext,                                        'ABCDEFGHIJKLMNOPQRSTUVWXYZ',                                        'abcdefghijklmnopqrstuvwxyz')"/>
