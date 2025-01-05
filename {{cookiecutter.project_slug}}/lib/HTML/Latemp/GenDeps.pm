@@ -43,7 +43,8 @@ sub run
     my @headers =
         map { ( $_ . '' ) =~ s{\Alib/}{}r }
         File::Find::Object::Rule->or( $discard, $rule->new() )
-        ->name(qr/\.(wml|html|xhtml)\z/)->in('lib');
+        ->name(qr/\.(wml|html|xhtml)\z/)
+        ->in('lib');
 
     my %files_containing_headers =
         ( map { $_ => { re => qr{^\#include *"\Q$_\E"}ms, files => {}, }, }
