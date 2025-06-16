@@ -82,7 +82,7 @@ m{^\[%\s+(?:INCLUDE\s*|PROCESS\s*|INSERT\s*|path_slurp\s*\(\s*)"([^"]+)"}gms
             $deps_text .=
                 join( ' ', @{ $self->_map_tt2_to_deps($header_deps) } );
 
-            $deps_text .= ": lib/$header\n\n";
+            $deps_text .= ": lib/$header\n";
         }
     }
 
