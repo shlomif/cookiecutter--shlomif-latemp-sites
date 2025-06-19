@@ -78,10 +78,7 @@
 
 [% individual_xhtml_pages_intermediate_dir %]/index[% html_ext %]: $([% db_macro_prefix %]_XML_DIR)/[% d.base %].xml $(XSL_SOURCES)
 [% "\t" %]mkdir -p [% individual_xhtml_pages_intermediate_dir %]
-[% "\t" %]$(DOCMAKE_WITH_PARAMS) \
-[% "\t\t" %]--trailing-slash=0 \
-[% "\t\t" %]--stringparam "docmake.output.format=xhtml" \
-[% "\t\t" %]--stringparam "docmake.output.path_to_root=[% "../../" %]" \
+[% "\t" %]$(DOCMAKE_WITH_PARAMS) $(DOCMAKE_COMMON_INDIVIDUAL_XHTML_PARAMS) \
 [%- SET v = d.work_in_progress ? "1" : "" %]
 [% "\t\t" %]--stringparam "docmake.output.work_in_progress=[% v %]" \
 [% IF d.del_revhistory %][% "\t\t" %]--stringparam "generate.revhistory.link=1" \[% "\n" %][% END -%]

@@ -3,6 +3,11 @@ DOCMAKE ?= docmake
 DOCMAKE_PARAMS = -v
 DOCMAKE_WITH_PARAMS = $(DOCMAKE) $(DOCMAKE_PARAMS)
 
+DOCMAKE_COMMON_INDIVIDUAL_XHTML_PARAMS = \
+	--trailing-slash=0 \
+	--stringparam "docmake.output.format=xhtml" \
+	--stringparam "docmake.output.path_to_root=../../"
+
 DOCMAKE_SGML_PATH := lib/sgml/shlomif-docbook
 
 # DOCBOOK5_RELAXNG := http://www.docbook.org/xml/5.0/rng/docbook.rng
